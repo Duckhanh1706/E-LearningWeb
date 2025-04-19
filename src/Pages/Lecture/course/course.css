@@ -1,0 +1,162 @@
+/* Container chứa khóa học */
+.course-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  padding-top: 90px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề của mỗi section */
+.course-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Wrapper chứa danh sách khóa học */
+.course-list-wrapper {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Danh sách các khóa học */
+.course-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.course-item:last-child {
+  border-bottom: none;
+}
+
+.course-item span {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Màu sắc cho trạng thái khóa học */
+.course-status {
+  font-size: 0.9rem;
+  color: #4caf50; /* Màu xanh cho trạng thái đang diễn ra */
+}
+
+.course-status-incomplete {
+  color: #f44336; /* Màu đỏ cho trạng thái chưa hoàn thành */
+}
+
+.course-status-completed {
+  color: #4caf50; /* Màu xanh cho trạng thái hoàn thành */
+}
+
+/* Class cho các khóa học hoàn thành */
+.completed-course-item .course-status {
+  color: #4caf50; /* Màu xanh cho khóa học hoàn thành */
+}
+
+.completed-course-item .course-status-incomplete {
+  color: #f44336; /* Màu đỏ cho trạng thái hoàn thành */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .course-container {
+    padding: 1rem;
+  }
+
+  .course-title {
+    font-size: 1.25rem;
+  }
+
+  .course-item {
+    padding: 0.5rem 0;
+  }
+}
+
+.no-courses-message {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Container chính cho lịch giảng dạy */
+.schedule-container {
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Tiêu đề */
+.schedule-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding-top: 100px;
+}
+
+/* Danh sách khóa học */
+.schedule-list {
+  list-style-type: none;
+  padding: 0;
+  padding-top: 90px;
+}
+
+.schedule-item {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedule-item span {
+  font-size: 1rem;
+  color: #333;
+}
+
+.schedule-item span.title {
+  font-weight: bold;
+}
+
+.schedule-item span.date {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Màu sắc cho các khóa học đã hoàn thành */
+.completed-course {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Hiển thị khi không có khóa học nào */
+.no-courses {
+  font-size: 1.2rem;
+  color: #888;
+  text-align: center;
+  margin-top: 2rem;
+}
+/* Thêm kiểu con trỏ khi di chuột vào tên khóa học */
+.schedule-item .title {
+  cursor: pointer; /* Đổi con trỏ thành hình bàn tay */
+}

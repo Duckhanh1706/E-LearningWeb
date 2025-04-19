@@ -1,0 +1,31 @@
+.role-options {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.role-option .dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.role-option.active .dot {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.role-option.active {
+  color: #28a745;
+}

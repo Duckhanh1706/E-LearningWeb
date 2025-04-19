@@ -1,0 +1,13 @@
+{
+  "lecturer": {
+    "name": "Nguyen Van A",
+    "avatarUrl": "https://placehold.co/100x100",
+    "bio": "Lecturer in Information Technology with many years of teaching experience.",
+    "followers": 1200,
+    "joinedDate": "2019-06-15",
+    "contact": {
+      "email": "nguyen.vana@example.com",
+      "phone": "+84 123 456 789"
+    }
+  }
+}

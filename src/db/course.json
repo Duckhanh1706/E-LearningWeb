@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Web Development with ReactJS",
+    "instructor": "Nguyen Van A",
+    "status": "In Progress",
+    "description": "An in-depth course on ReactJS, JSX, hooks, and state management.",
+    "startDate": "2025-04-01",
+    "endDate": "2025-06-01",
+    "assignments": "Major assignment, mid-term exam"
+  },
+  {
+    "id": 2,
+    "title": "Introduction to Python",
+    "instructor": "Tran Thi B",
+    "status": "Completed",
+    "description": "A basic course on Python, variables, loops, functions, and file handling.",
+    "startDate": "2025-01-10",
+    "endDate": "2025-03-10",
+    "assignments": "Weekly small assignments"
+  },
+  {
+    "id": 3,
+    "title": "Backend Development with Node.js",
+    "instructor": "Le Van C",
+    "status": "In Progress",
+    "description": "Learn how to build APIs with Express, MongoDB, and JWT.",
+    "startDate": "2025-04-15",
+    "endDate": "2025-07-01",
+    "assignments": "Final project, weekly quizzes"
+  },
+  {
+    "id": 4,
+    "title": "Basic Machine Learning",
+    "instructor": "Pham Thi D",
+    "status": "Not Started",
+    "description": "Overview of ML, supervised learning, and basic algorithms.",
+    "startDate": "2025-05-01",
+    "endDate": "2025-08-01",
+    "assignments": "Lab assignments and mini-project"
+  }
+]
