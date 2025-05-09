@@ -25,7 +25,7 @@ import StudentDashboard from "./routes/Dashboard/StudentDashboard";
 import LecProfile from "./Pages/Lecture/profile/profile";
 import StuProfile from "./Pages/Student/profile/profile";
 import ManageCourses from "./Pages/Lecture/course/manageCourse";
-import AddAssignment from "./Pages/Lecture/course/AddAssignment";
+import HomeWork from "./Pages/Lecture/course/homework";
 import Schedule from "./Pages/Lecture/course/schedule";
 import CurrentCourses from "./Pages/Lecture/course/currentCoures";
 import CompletedCourses from "./Pages/Lecture/course/completedCourses";
@@ -35,6 +35,8 @@ import EditProfile from "./Pages/Lecture/profile/edit-profile";
 import { AuthProvider, useAuth } from "./components/context/AuthContext";
 import CreateCourse from "./Pages/Lecture/course/createCourse";
 import LecturerDashboardHome from "./Pages/Lecture/dashboard/home";
+import MyCourses from "./Pages/Student/course/courses";
+import CourseList from "./Pages/Student/course/courseList";
 
 // Route guard
 function ProtectedRoute({ children, role }) {
@@ -75,15 +77,16 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LecturerDashboardHome /> },
       { path: "dashboard", element: <LecturerDashboard /> },
-      { path: "profile", element: <LecProfile /> },
+      { index: true, path: "profile", element: <LecProfile /> },
       { path: "courses", element: <ManageCourses /> },
-      { path: "add-assignment", element: <AddAssignment /> },
+      { path: "add-assignment", element: <HomeWork /> },
       { path: "completedCourses", element: <CompletedCourses /> },
       { path: "currentCourses", element: <CurrentCourses /> },
       { path: "schedule", element: <Schedule /> },
       { path: "course/:id", element: <CourseDetail /> },
       { path: "edit-profile", element: <EditProfile /> },
       { path: "create-Course", element: <CreateCourse /> },
+      { path: "course/:id/add-assignment", element: <HomeWork /> },
     ],
   },
   {
@@ -96,6 +99,8 @@ const router = createBrowserRouter([
     children: [
       { path: "dashboard", element: <StudentDashboard /> },
       { path: "profile", element: <StuProfile /> },
+      { path: "course", element: <MyCourses /> },
+      { path: "viewCourse", element: <CourseList /> },
     ],
   },
 ]);

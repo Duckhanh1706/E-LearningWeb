@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import course from "../../../db/course.json";
+import courseData from "../../../db/course.json";
 import "./course.css";
 
 const CurrentCourses = () => {
@@ -9,19 +9,26 @@ const CurrentCourses = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const filteredCourses = course.filter(
-        (course) => course.status === "In Progress"
-      );
-      setCourses(filteredCourses);
-    } catch (error) {
-      setError("Error loading courses.");
-    }
+    const filteredCourses = courseData.filter(
+      (course) => course.status === "In Progress"
+    );
+    setCourses(filteredCourses);
   }, []);
 
   if (error) {
     return <div>{error}</div>;
   }
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/lecturer/course/${courseId}`, {
+      state: { fromCurrentCourses: true }, // Truyền state từ CurrentCourses
+    });
+  };
+
+  // Hàm chuyển hướng đến trang thêm bài tập
+  const handleAddAssignment = (courseId) => {
+    navigate(`/lecturer/course/${courseId}/add-assignment`);
+  };
 
   return (
     <div className="course-container">
@@ -32,11 +39,20 @@ const CurrentCourses = () => {
               <li key={course.id} className="course-item">
                 <Link
                   to={`/lecturer/course/${course.id}`}
+                  onClick={() => handleCourseClick(course.id)} // Xử lý sự kiện click
                   className="course-link"
                 >
                   <span>{course.title}</span>
                 </Link>
                 <span className="course-status">{course.status}</span>
+
+                {/* Nút button để thêm bài tập */}
+                <button
+                  onClick={() => handleAddAssignment(course.id)}
+                  className="add-assignment-btn"
+                >
+                  <span className="plus-icon">+</span> Add Assignment
+                </button>
               </li>
             ))}
           </ul>

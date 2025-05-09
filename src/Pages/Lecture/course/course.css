@@ -160,3 +160,104 @@
 .schedule-item .title {
   cursor: pointer; /* Đổi con trỏ thành hình bàn tay */
 }
+.add-assignment-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add-assignment-btn:hover {
+  background-color: #45a049;
+}
+
+.plus-icon {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.homework-container {
+  max-width: 200px;
+  margin: 20px auto;
+  padding: 30px;
+  padding-top: 90px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.homework-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.file-input-label {
+  font-weight: 500;
+  color: #444;
+}
+
+.filename {
+  font-size: 14px;
+  color: #555;
+  word-break: break-word;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 480px) {
+  .homework-container {
+    max-width: 90%;
+    padding: 20px;
+  }
+}

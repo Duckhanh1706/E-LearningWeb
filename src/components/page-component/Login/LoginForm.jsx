@@ -39,7 +39,7 @@ export default function LoginForm({ handleCancel, showRegister }) {
     if (matchedUser) {
       console.log("Login successful:", matchedUser);
       login(matchedUser); // Cập nhật trạng thái đăng nhập với thông tin người dùng
-      navigate(`/${role}/dashboard`); // Điều hướng đến dashboard phù hợp
+      navigate(`/${role}/profile`); // Điều hướng đến dashboard phù hợp
     } else {
       alert("Invalid email, password or role.");
     }

@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import lecturerData from "../../../db/lecturer.json"; // Dữ liệu giảng viên
-import courseData from "../../../db/course.json"; // Dữ liệu khóa học
 import "./profile.css";
 
 const LecProfile = () => {
   const [lecturer, setLecturer] = useState({});
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -20,13 +19,35 @@ const LecProfile = () => {
   };
 
   useEffect(() => {
-    setLecturer(lecturerData.lecturer);
-    setCourses(courseData);
-    setLoading(false);
+    // Gọi API để lấy dữ liệu giảng viên và khóa học
+    const fetchData = async () => {
+      try {
+        // Gọi API lấy thông tin giảng viên
+        const lecturerResponse = await fetch("/teacher/profile"); // Thay thế URL API giảng viên thật
+        const lecturerData = await lecturerResponse.json();
+
+        // Gọi API lấy danh sách khóa học
+        const coursesResponse = await fetch("/teaching"); // Thay thế URL API khóa học thật
+        const coursesData = await coursesResponse.json();
+
+        setLecturer(lecturerData); // Gán dữ liệu giảng viên
+        setCourses(coursesData); // Gán dữ liệu khóa học
+        setLoading(false); // Tắt trạng thái loading
+      } catch (error) {
+        setError("Có lỗi xảy ra khi tải dữ liệu");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) {
     return <div>Đang tải dữ liệu...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
@@ -93,7 +114,7 @@ const LecProfile = () => {
         </div>
 
         {/* Các nút lựa chọn chỉnh sửa thông tin và tạo khóa học */}
-        <div className="mt-4">
+        <div className="mt-4 text-center">
           <button className="btn-edit-profile" onClick={handleEditProfile}>
             Chỉnh sửa thông tin
           </button>

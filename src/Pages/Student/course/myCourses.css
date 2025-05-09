@@ -1,0 +1,86 @@
+/* Container chính của "My Courses" */
+.my-courses-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Tiêu đề của trang */
+.my-courses-container h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Danh sách các khóa học */
+.courses-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Mỗi khóa học trong danh sách */
+.course-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: background-color 0.3s ease;
+}
+
+/* Khi hover qua khóa học */
+.course-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Thông tin của khóa học */
+.course-info {
+  flex-grow: 1;
+}
+
+.course-info h3 {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin: 0 0 10px;
+}
+
+.course-info p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Nút "Xem chi tiết" */
+.view-course-btn {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hiệu ứng hover khi bấm vào "Xem chi tiết" */
+.view-course-btn:hover {
+  background-color: #45a049;
+}
+
+/* Thông báo nếu không có khóa học nào */
+.no-courses-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-top: 50px;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // import useNavigate
+import { useNavigate } from "react-router-dom";
 import "./editProfile.css";
 
 const EditProfile = () => {
@@ -36,14 +36,44 @@ const EditProfile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLecturer((prev) => ({
+        ...prev,
+        avatarUrl: file,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Dữ liệu giảng viên:", lecturer);
 
-    // TODO: Gọi API lưu dữ liệu tại đây nếu cần
+    // Create FormData to send both text and file data
+    const formData = new FormData();
+    formData.append("name", lecturer.name);
+    formData.append("bio", lecturer.bio);
+    formData.append("joinedDate", lecturer.joinedDate);
+    formData.append("email", lecturer.contact.email);
+    formData.append("phone", lecturer.contact.phone);
+    formData.append("avatarUrl", lecturer.avatarUrl);
 
-    // Sau khi lưu, chuyển hướng về trang profile
-    navigate("/lecturer/profile");
+    try {
+      // Gửi yêu cầu PUT đến API để cập nhật thông tin giảng viên
+      const response = await fetch("/api/update-instructor-profile", {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Nếu thành công, chuyển hướng về trang profile
+        navigate("/lecturer/profile");
+      } else {
+        console.error("Cập nhật thông tin thất bại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi yêu cầu:", error);
+    }
   };
 
   return (
@@ -64,15 +94,27 @@ const EditProfile = () => {
         </div>
 
         <div className="form-group">
-          <label>URL ảnh đại diện</label>
+          <label>Ảnh đại diện</label>
           <input
-            type="text"
+            type="file"
             name="avatarUrl"
-            value={lecturer.avatarUrl}
-            onChange={handleChange}
+            accept="image/*"
+            onChange={handleFileChange}
             className="input-field"
           />
         </div>
+
+        {lecturer.avatarUrl && (
+          <div className="preview-image">
+            <p>Ảnh đã chọn: {lecturer.avatarUrl.name}</p>
+            <img
+              src={URL.createObjectURL(lecturer.avatarUrl)}
+              alt="Avatar Preview"
+              width="100"
+              height="100"
+            />
+          </div>
+        )}
 
         <div className="form-group">
           <label>Mô tả</label>

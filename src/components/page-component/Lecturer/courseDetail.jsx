@@ -1,66 +1,102 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Thêm useNavigate
-import courseData from "../../../db/course.json";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./courseDetail.css"; // Import CSS
 
 const CourseDetail = () => {
-  const { id } = useParams(); // Lấy ID khóa học từ URL
+  const { id } = useParams();
   const [course, setCourse] = useState(null);
-  const navigate = useNavigate(); // Khai báo navigate
+  const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
+  const [error, setError] = useState(null); // Trạng thái lỗi nếu có lỗi trong việc gọi API
+  const navigate = useNavigate();
+  const location = useLocation(); // Lấy location từ router
 
   useEffect(() => {
-    // Tìm khóa học từ file JSON dựa trên ID
-    const foundCourse = courseData.find((course) => course.id === parseInt(id)); // Đảm bảo ID là kiểu số
-    setCourse(foundCourse);
+    // Hàm gọi API để lấy dữ liệu khóa học
+    const fetchCourseData = async () => {
+      try {
+        const response = await fetch(
+          `https://your-api-endpoint.com/courses/${id}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Không thể lấy dữ liệu khóa học");
+        }
+
+        const data = await response.json();
+        setCourse(data); // Cập nhật state với dữ liệu khóa học nhận được
+      } catch (error) {
+        setError(error.message); // Nếu có lỗi, lưu lại thông báo lỗi
+      } finally {
+        setLoading(false); // Kết thúc việc tải dữ liệu
+      }
+    };
+
+    fetchCourseData();
   }, [id]);
 
-  if (!course) {
+  if (loading) {
     return <div>Đang tải dữ liệu...</div>;
   }
+
+  if (error) {
+    return <div>Lỗi: {error}</div>;
+  }
+
+  if (!course) {
+    return <div>Không tìm thấy khóa học.</div>;
+  }
+
+  // Kiểm tra xem trang có được mở từ CurrentCourses không
+  const isFromCurrentCourses = location.state?.fromCurrentCourses || false;
+
+  console.log("Is from CurrentCourses: ", isFromCurrentCourses);
 
   return (
     <div className="course-detail-container">
       <h2 className="course-title">{course.title}</h2>
 
-      {/* Section for Instructor */}
       <section className="course-section">
-        <h3>Instructor</h3>
+        <h3>Giảng viên</h3>
         <p>{course.instructor}</p>
       </section>
 
-      {/* Section for Status */}
       <section className="course-section">
-        <h3>Status</h3>
+        <h3>Trạng thái</h3>
         <p>{course.status}</p>
       </section>
 
-      {/* Section for Description */}
       <section className="course-section">
-        <h3>Description</h3>
+        <h3>Mô tả</h3>
         <p>{course.description}</p>
       </section>
 
-      {/* Section for Start Date */}
       <section className="course-section">
-        <h3>Start Date</h3>
+        <h3>Ngày bắt đầu</h3>
         <p>{course.startDate}</p>
       </section>
 
-      {/* Section for End Date */}
       <section className="course-section">
-        <h3>End Date</h3>
+        <h3>Ngày kết thúc</h3>
         <p>{course.endDate}</p>
       </section>
 
-      {/* Section for Assignments */}
       <section className="course-section">
-        <h3>Assignments</h3>
+        <h3>Bài tập</h3>
         <p>{course.assignments}</p>
+
+        {/* Hiển thị nút Add Assignment nếu trang được mở từ CurrentCourses */}
+        {isFromCurrentCourses && (
+          <button
+            className="add-assignment-btn"
+            onClick={() => navigate(`/lecturer/course/${course.id}/uploadfile`)}
+          >
+            + Thêm bài tập
+          </button>
+        )}
       </section>
 
-      {/* Back Button */}
       <button onClick={() => navigate(-1)} className="back-button">
-        ← Back
+        ← Quay lại
       </button>
     </div>
   );
