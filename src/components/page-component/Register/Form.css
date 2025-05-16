@@ -1,6 +1,6 @@
 .role-options {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   margin: 1rem 0;
 }
 
@@ -10,6 +10,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: color 0.2s;
+  user-select: none;
 }
 
 .role-option .dot {
@@ -19,6 +20,8 @@
   border: 2px solid #ccc;
   margin-right: 8px;
   display: inline-block;
+  box-sizing: border-box;
+  background-color: transparent;
 }
 
 .role-option.active .dot {
@@ -30,10 +33,6 @@
   color: #28a745;
 }
 
-.alert-close button {
-  flex: 1;
-  margin: 0 5px;
-  height: 40px;
-  font-size: 16px;
-  padding: 0;
+.role-option input[type="radio"] {
+  display: none;
 }

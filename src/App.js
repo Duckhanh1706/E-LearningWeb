@@ -24,7 +24,7 @@ import OffersCard from "./components/page-component/OffersCard";
 
 import TestimonialsList from "./components/Lists/TestimonialsList";
 import LoginForm from "./components/page-component/Login/LoginForm";
-import RegistrationForm from "./components/page-component/RegistrationForm";
+import RegistrationForm from "./components/page-component/Register/RegistrationForm";
 
 function App() {
   const [showCourse, setShowCourse] = useState(false);

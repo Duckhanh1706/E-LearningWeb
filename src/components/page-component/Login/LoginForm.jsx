@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext"; // Import context
 import Title from "../../common/Title";
 import Button from "../../common/Button";
 import FormGroup from "../../FormGroup";
-import users from "../../../db/login.json"; // Dữ liệu user tạm thời
+import users from "../../../db/login.json"; // Temporary user data
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function LoginForm({ handleCancel, showRegister }) {
 
   const navigate = useNavigate();
   const emailRef = useRef();
-  const { login } = useAuth(); // Lấy hàm login từ context
+  const { login } = useAuth(); // Get login function from context
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,8 +38,8 @@ export default function LoginForm({ handleCancel, showRegister }) {
 
     if (matchedUser) {
       console.log("Login successful:", matchedUser);
-      login(matchedUser); // Cập nhật trạng thái đăng nhập với thông tin người dùng
-      navigate(`/${role}/profile`); // Điều hướng đến dashboard phù hợp
+      login(matchedUser); // Update login state with user info
+      navigate(`/${role}/profile`); // Navigate to corresponding dashboard
     } else {
       alert("Invalid email, password or role.");
     }
@@ -102,9 +102,13 @@ export default function LoginForm({ handleCancel, showRegister }) {
         </div>
 
         <div className="d-flex alert-close">
-          <Button classes="btn-primary" type="submit" text="Login" />
-          <Button classes="btn-close-dark" text="x" onClick={handleCancel} />
-          <Button type="button" text="Register" onClick={showRegister} />
+          <Button classes="btn-custom" type="submit" text="Login" />
+          <Button
+            type="button"
+            text="Register"
+            onClick={() => navigate("/register")}
+            classes="btn-register"
+          />
         </div>
       </form>
     </div>

@@ -16,7 +16,7 @@ import Home from "./routes/HomeLayout/home";
 import About from "./routes/HomeLayout/about";
 import Index from "./routes/HomeLayout/index";
 import Login from "./routes/HomeLayout/Login";
-import Register from "./routes/HomeLayout/Register";
+import RegisterForm from "./components/page-component/Register/RegistrationForm";
 
 // Dashboard layout và pages
 
@@ -31,10 +31,12 @@ import CurrentCourses from "./Pages/Lecture/course/currentCoures";
 import CompletedCourses from "./Pages/Lecture/course/completedCourses";
 import CourseDetail from "./components/page-component/Lecturer/courseDetail";
 import EditProfile from "./Pages/Lecture/profile/edit-profile";
+import RegisterStudentInfo from "./components/page-component/Register/Student";
+import RegisterTeacherInfo from "./components/page-component/Register/Lecturer";
 // Context
 import { AuthProvider, useAuth } from "./components/context/AuthContext";
 import CreateCourse from "./Pages/Lecture/course/createCourse";
-import LecturerDashboardHome from "./Pages/Lecture/dashboard/home";
+
 import MyCourses from "./Pages/Student/course/courses";
 import CourseList from "./Pages/Student/course/courseList";
 
@@ -64,7 +66,9 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
+      { path: "register", element: <RegisterForm /> },
+      { path: "register-lecturer-info", element: <RegisterTeacherInfo /> },
+      { path: "register-student-info", element: <RegisterStudentInfo /> },
     ],
   },
   {
@@ -75,7 +79,6 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { index: true, element: <LecturerDashboardHome /> },
       { path: "dashboard", element: <LecturerDashboard /> },
       { index: true, path: "profile", element: <LecProfile /> },
       { path: "courses", element: <ManageCourses /> },

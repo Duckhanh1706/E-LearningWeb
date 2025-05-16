@@ -1,0 +1,64 @@
+/* src/pages/RegisterTeacherInfo.css */
+.pro-title {
+  padding-top: 20px;
+}
+.pro-h2 {
+  padding-top: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #333;
+  font-weight: 600;
+}
+
+.pro-form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.pro-form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px #007bffaa;
+}
+
+.pro-btn-submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pro-btn-submit:hover {
+  background-color: #0056b3;
+}
+.pro-form {
+  max-width: 400px; /* giới hạn chiều ngang tối đa */
+  margin: 0 auto; /* căn giữa */
+  padding: 10px;
+}
+
+.pro-form input {
+  max-width: 100%; /* chiếm đầy khung form */
+  box-sizing: border-box; /* tính padding và border vào chiều rộng */
+}
+.pro-avatar-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
