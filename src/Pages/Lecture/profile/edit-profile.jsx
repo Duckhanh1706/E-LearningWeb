@@ -7,10 +7,8 @@ const EditProfile = () => {
 
   const [lecturer, setLecturer] = useState({
     name: "",
-    avatarUrl: "",
+    avatarUrl: null,
     bio: "",
-    followers: "",
-    joinedDate: "",
     contact: {
       email: "",
       phone: "",
@@ -49,24 +47,24 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create FormData to send both text and file data
     const formData = new FormData();
     formData.append("name", lecturer.name);
     formData.append("bio", lecturer.bio);
-    formData.append("joinedDate", lecturer.joinedDate);
-    formData.append("email", lecturer.contact.email);
-    formData.append("phone", lecturer.contact.phone);
-    formData.append("avatarUrl", lecturer.avatarUrl);
+    formData.append("contact[email]", lecturer.contact.email);
+    formData.append("contact[phone]", lecturer.contact.phone);
+    if (lecturer.avatarUrl) {
+      formData.append("uploaded_file", lecturer.avatarUrl);
+    }
 
     try {
-      // Gửi yêu cầu PUT đến API để cập nhật thông tin giảng viên
       const response = await fetch("/api/update-instructor-profile", {
         method: "PUT",
         body: formData,
       });
 
       if (response.ok) {
-        // Nếu thành công, chuyển hướng về trang profile
+        const data = await response.json();
+        console.log(data.message); // Log message from backend
         navigate("/lecturer/profile");
       } else {
         console.error("Cập nhật thông tin thất bại.");
@@ -80,7 +78,6 @@ const EditProfile = () => {
     <div className="edit-profile-container">
       <h2>Chỉnh sửa thông tin giảng viên</h2>
       <form onSubmit={handleSubmit} className="edit-profile-form">
-        {/* Các trường nhập liệu giữ nguyên */}
         <div className="form-group">
           <label>Họ và tên</label>
           <input
@@ -123,29 +120,6 @@ const EditProfile = () => {
             value={lecturer.bio}
             onChange={handleChange}
             className="textarea-field"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Ngày tham gia</label>
-          <input
-            type="date"
-            name="joinedDate"
-            value={lecturer.joinedDate}
-            onChange={handleChange}
-            className="input-field"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={lecturer.contact.email}
-            onChange={handleChange}
-            className="input-field"
-            required
           />
         </div>
 

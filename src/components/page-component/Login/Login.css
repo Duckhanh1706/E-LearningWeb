@@ -26,14 +26,16 @@
   border-color: #28a745;
 }
 
-.role-option.active {
-  color: #28a745;
-}
-
 .alert-close button {
   flex: 1;
   margin: 0 5px;
   height: 40px;
   font-size: 16px;
   padding: 0;
+}
+
+.fg-pw {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
 }

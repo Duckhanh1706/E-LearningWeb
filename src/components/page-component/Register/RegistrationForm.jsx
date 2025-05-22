@@ -55,7 +55,17 @@ export default function RegisterForm({ onRegistered }) {
   return (
     <div className="form fadeIn register-form" style={{ maxWidth: 500 }}>
       <Title text="Register" classes="text-center mb-4" />
-      <h3 className="subtitle mb-3">Create your account</h3>
+      <h3
+        className="subtitle mb-3"
+        style={{
+          fontSize: "40px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        Create your account
+      </h3>
 
       <form onSubmit={handleSubmit} autoComplete="off">
         <FormGroup
@@ -83,20 +93,37 @@ export default function RegisterForm({ onRegistered }) {
           autoComplete="new-password"
         />
 
-        <div className="form-group mb-3">
-          <label htmlFor="roleSelect">Role</label>
-          <select
-            id="roleSelect"
-            className="form-control"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+        <div className="role-options mt-3">
+          <label
+            className={`role-option ${role === "student" ? "active" : ""}`}
           >
-            <option value="lecturer">Lecturer</option>
-            <option value="student">Student</option>
-          </select>
+            <input
+              type="radio"
+              name="role"
+              value="student"
+              checked={role === "student"}
+              onChange={(e) => setRole(e.target.value)}
+              hidden
+            />
+            <span className="dot" /> Student
+          </label>
+
+          <label
+            className={`role-option ${role === "lecturer" ? "active" : ""}`}
+          >
+            <input
+              type="radio"
+              name="role"
+              value="lecturer"
+              checked={role === "lecturer"}
+              onChange={(e) => setRole(e.target.value)}
+              hidden
+            />
+            <span className="dot" /> Lecturer
+          </label>
         </div>
 
-        <div className="d-flex justify-content-between mt-3">
+        <div className="d-flex justify-content-between mt-4">
           <Button classes="btn-primary" type="submit" text="Register" />
         </div>
       </form>

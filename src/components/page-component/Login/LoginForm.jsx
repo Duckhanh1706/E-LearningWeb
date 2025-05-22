@@ -52,7 +52,17 @@ export default function LoginForm({ handleCancel, showRegister }) {
   return (
     <div className="form fadeIn" style={{ maxWidth: 500 }}>
       <Title text="Login" classes={"text-center mb-4"} />
-      <h4 className="subtitle">Enter your credentials</h4>
+      <h3
+        className="subtitle mb-3"
+        style={{
+          fontSize: "40px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        Enter your credentials
+      </h3>
 
       <form onSubmit={handleSubmit}>
         <FormGroup
@@ -104,11 +114,21 @@ export default function LoginForm({ handleCancel, showRegister }) {
         <div className="d-flex alert-close">
           <Button classes="btn-custom" type="submit" text="Login" />
           <Button
-            type="button"
+            type="button-custom"
             text="Register"
             onClick={() => navigate("/register")}
             classes="btn-register"
           />
+        </div>
+        <div className="text-end mb-2">
+          <button
+            type="button"
+            className="btn fg-pw"
+            onClick={() => navigate("/forgot-password")}
+            style={{ fontSize: "14px" }}
+          >
+            Forgot your password?
+          </button>
         </div>
       </form>
     </div>
