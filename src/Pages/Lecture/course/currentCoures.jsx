@@ -1,12 +1,71 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import courseData from "../../../db/course.json";
 import "./course.css";
+
+const AddAssignmentModal = ({ courseId, onClose }) => {
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!file) {
+      alert("Vui lòng chọn file để tải lên");
+      return;
+    }
+
+    // Demo alert, bạn thay bằng API call upload file + mô tả
+    alert(
+      `Thêm bài tập cho khóa học ${courseId}\nMô tả: ${description}\nFile: ${file.name}`
+    );
+
+    // Reset form
+    setDescription("");
+    setFile(null);
+    onClose();
+  };
+
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-content">
+        <h3>Thêm bài tập cho khóa học {courseId}</h3>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Mô tả bài tập:</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Nhập mô tả bài tập"
+              required
+              rows={3}
+              style={{ width: "100%", resize: "vertical" }}
+            />
+          </div>
+          <div style={{ marginTop: "12px" }}>
+            <input type="file" onChange={handleFileChange} required />
+          </div>
+          <div style={{ marginTop: "16px" }}>
+            <button type="submit">Thêm bài tập</button>
+            <button type="button" onClick={onClose}>
+              Hủy
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const CurrentCourses = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   useEffect(() => {
     const filteredCourses = courseData.filter(
@@ -15,20 +74,19 @@ const CurrentCourses = () => {
     setCourses(filteredCourses);
   }, []);
 
+  const handleAddAssignmentClick = (courseId) => {
+    setSelectedCourseId(courseId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedCourseId(null);
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
-
-  const handleCourseClick = (courseId) => {
-    navigate(`/lecturer/course/${courseId}`, {
-      state: { fromCurrentCourses: true }, // Truyền state từ CurrentCourses
-    });
-  };
-
-  // Hàm chuyển hướng đến trang thêm bài tập
-  const handleAddAssignment = (courseId) => {
-    navigate(`/lecturer/course/${courseId}/add-assignment`);
-  };
 
   return (
     <div className="course-container">
@@ -37,18 +95,10 @@ const CurrentCourses = () => {
           <ul className="course-list">
             {courses.map((course) => (
               <li key={course.id} className="course-item">
-                <Link
-                  to={`/lecturer/course/${course.id}`}
-                  onClick={() => handleCourseClick(course.id)} // Xử lý sự kiện click
-                  className="course-link"
-                >
-                  <span>{course.title}</span>
-                </Link>
+                <span>{course.title}</span>
                 <span className="course-status">{course.status}</span>
-
-                {/* Nút button để thêm bài tập */}
                 <button
-                  onClick={() => handleAddAssignment(course.id)}
+                  onClick={() => handleAddAssignmentClick(course.id)}
                   className="add-assignment-btn"
                 >
                   <span className="plus-icon">+</span> Add Assignment
@@ -60,6 +110,10 @@ const CurrentCourses = () => {
           <p>No courses in progress</p>
         )}
       </div>
+
+      {showModal && (
+        <AddAssignmentModal courseId={selectedCourseId} onClose={closeModal} />
+      )}
     </div>
   );
 };

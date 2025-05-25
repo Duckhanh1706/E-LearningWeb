@@ -1,67 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./myCourses.css"; // Import CSS
+import "./myCourses.css";
 
 const MyCourses = () => {
-  const [courses, setCourses] = useState([]); // Lưu trữ danh sách khóa học
-  const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
-  const [error, setError] = useState(null); // Trạng thái lỗi nếu có lỗi trong việc gọi API
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Hàm gọi API để lấy danh sách khóa học của học viên
     const fetchMyCourses = async () => {
       try {
-        const response = await fetch("");
-
+        const response = await fetch(
+          "http://localhost:5000/student/my-courses"
+        ); // API giả định
         if (!response.ok) {
           throw new Error("Không thể lấy danh sách khóa học");
         }
-
         const data = await response.json();
-        setCourses(data); // Cập nhật state với danh sách khóa học
+        setCourses(data.courses); // Giả sử backend trả về { courses: [...] }
       } catch (error) {
-        setError(error.message); // Nếu có lỗi, lưu lại thông báo lỗi
+        setError(error.message);
       } finally {
-        setLoading(false); // Kết thúc việc tải dữ liệu
+        setLoading(false);
       }
     };
 
     fetchMyCourses();
-  }, []); // useEffect chỉ chạy khi component được mount
+  }, []);
 
-  if (loading) {
-    return <div>Đang tải danh sách khóa học...</div>;
-  }
-
-  if (error) {
-    return <div>Lỗi: {error}</div>;
-  }
+  if (loading) return <div>Đang tải danh sách khóa học...</div>;
+  if (error) return <div>Lỗi: {error}</div>;
 
   return (
     <div className="my-courses-container">
       <h2>Danh sách khóa học của tôi</h2>
-
       {courses.length === 0 ? (
         <p>Bạn chưa tham gia khóa học nào.</p>
       ) : (
         <ul className="courses-list">
           {courses.map((course) => (
             <li key={course.id} className="course-item">
-              <div className="course-info">
-                <h3>{course.title}</h3>
-                <p>Giảng viên: {course.instructor}</p>
-                <p>Ngày bắt đầu: {course.startDate}</p>
-                <p>Ngày kết thúc: {course.endDate}</p>
-                <p>Trạng thái: {course.status}</p>
-              </div>
-
-              <button
+              {/* Khi click vào tên sẽ chuyển đến trang chi tiết */}
+              <h3
+                className="course-title"
+                style={{
+                  cursor: "pointer",
+                  color: "blue",
+                  textDecoration: "underline",
+                }}
                 onClick={() => navigate(`/student/course/${course.id}`)}
-                className="view-course-btn"
               >
-                Xem chi tiết
-              </button>
+                {course.title}
+              </h3>
+              <p>Trạng thái: {course.status}</p>
             </li>
           ))}
         </ul>

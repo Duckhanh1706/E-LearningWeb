@@ -104,6 +104,9 @@ const router = createBrowserRouter([
       { path: "profile", element: <StuProfile /> },
       { path: "course", element: <MyCourses /> },
       { path: "viewCourse", element: <CourseList /> },
+      { path: "edit-profile", element: <EditProfile /> },
+      { path: "course/:courseId", element: <CourseDetail /> },
+      { path: "course/:courseId/videos", element: <CourseVideoList /> },
     ],
   },
 ]);

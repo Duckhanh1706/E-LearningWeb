@@ -7,6 +7,7 @@ import FormGroup from "../../FormGroup";
 export default function RegisterForm({ onRegistered }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(""); // thêm state phone
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
 
@@ -20,6 +21,7 @@ export default function RegisterForm({ onRegistered }) {
   const resetForm = () => {
     setName("");
     setEmail("");
+    setPhone(""); // reset phone
     setPassword("");
     setRole("student");
   };
@@ -32,7 +34,7 @@ export default function RegisterForm({ onRegistered }) {
     if (password.length <= 4)
       return alert("Password must be more than 4 characters!");
 
-    const newUser = { name, email, password, role };
+    const newUser = { name, email, phone, password, role };
     console.log("Registration successful:", newUser);
 
     resetForm();
@@ -54,7 +56,11 @@ export default function RegisterForm({ onRegistered }) {
 
   return (
     <div className="form fadeIn register-form" style={{ maxWidth: 500 }}>
-      <Title text="Register" classes="text-center mb-4" />
+      <Title
+        text="Register"
+        classes="text-center mb-4"
+        styles={{ fontSize: "40px" }}
+      />
       <h3
         className="subtitle mb-3"
         style={{
@@ -83,6 +89,14 @@ export default function RegisterForm({ onRegistered }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="off"
+        />
+        <FormGroup
+          label="Phone Number"
+          type="tel"
+          placeholder="Enter your phone number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          autoComplete="tel"
         />
         <FormGroup
           label="Password"
@@ -126,6 +140,18 @@ export default function RegisterForm({ onRegistered }) {
         <div className="d-flex justify-content-between mt-4">
           <Button classes="btn-primary" type="submit" text="Register" />
         </div>
+        <p
+          className="dk"
+          style={{
+            fontFamily: "Arial, sans-serif",
+            color: "#666666",
+            fontWeight: 300,
+            textAlign: "center",
+          }}
+        >
+          Việc bạn tiếp tục sử dụng trang web này đồng nghĩa bạn đồng ý với điều{" "}
+          khoản sử dụng của chúng tôi.
+        </p>
       </form>
     </div>
   );

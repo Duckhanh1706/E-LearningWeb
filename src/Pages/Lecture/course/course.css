@@ -156,10 +156,13 @@
   text-align: center;
   margin-top: 2rem;
 }
+
 /* Thêm kiểu con trỏ khi di chuột vào tên khóa học */
 .schedule-item .title {
   cursor: pointer; /* Đổi con trỏ thành hình bàn tay */
 }
+
+/* Nút thêm bài tập */
 .add-assignment-btn {
   background-color: #4caf50;
   color: white;
@@ -183,6 +186,7 @@
   margin-right: 5px;
 }
 
+/* Container bài tập */
 .homework-container {
   max-width: 200px;
   margin: 20px auto;
@@ -260,4 +264,100 @@ button[disabled] {
     max-width: 90%;
     padding: 20px;
   }
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 6px;
+  width: 400px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tiêu đề modal */
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+}
+
+/* Form trong modal */
+.modal-content form {
+  display: block;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input text */
+.modal-content input[type="text"] {
+  padding: 8px 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-content input[type="text"]:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+.modal-content button {
+  display: flexbox;
+}
+/* Nút bấm trong modal */
+.modal-content button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Nút hủy */
+.modal-content button[type="button"] {
+  background-color: #888;
+  margin-top: 10px;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button[type="button"]:hover {
+  background-color: #666;
 }

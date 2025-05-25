@@ -1,144 +1,116 @@
-/* profile.css */
-
-/* Container chung */
 .profile-container {
-  font-family: "Arial", sans-serif;
   background-color: #f9fafb;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 20px 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.mt-4 {
+  text-align: justify;
 }
-
 .profile-card {
-  background-color: #ffffff;
-  border-radius: 8px;
+  background-color: white;
+  border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(45, 34, 34, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* sửa căn trái toàn bộ card */
 }
 
 .profile-header {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  gap: 16px; /* Khoảng cách giữa ảnh và text */
+  justify-content: flex-start; /* Căn trái */
+  width: 100%;
 }
 
 .profile-header img {
+  width: 96px; /* kích thước ảnh */
+  height: 96px;
   border-radius: 50%;
-}
-
-.profile-header .ml-4 {
-  margin-left: 16px;
+  object-fit: cover; /* giữ tỉ lệ ảnh */
 }
 
 .profile-header h2 {
+  margin: 0;
   font-size: 1.5rem;
-  color: #333;
+  font-weight: 700;
+  color: #111827;
 }
 
 .profile-header p {
-  font-size: 0.875rem;
-  color: #666;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 0.9rem;
 }
 
-/* Courses Section */
-.bg-white {
-  background-color: #ffffff;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.rounded-lg {
-  border-radius: 8px;
-}
-
-.shadow-md {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.text-lg {
-  font-size: 1.125rem;
-}
-
-.font-bold {
-  font-weight: bold;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.text-gray-600 {
+.profile-card p {
+  margin: 6px 0;
+  font-size: 0.9rem;
   color: #4b5563;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .course-item {
+  background-color: #e0e7ff; /* light indigo */
+  border-radius: 8px;
+  padding: 12px 16px;
   margin-bottom: 12px;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.course-item:hover {
+  background-color: #3e55b3; /* slightly darker on hover */
 }
 
 .course-item h4 {
-  font-size: 1rem;
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: #1e40af; /* indigo-800 */
 }
 
 .course-item p {
-  font-size: 0.875rem;
-  color: #4b5563;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #374151;
 }
 
-/* Buttons */
-.btn-edit-profile,
-.btn-add-course {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-}
+/* Responsive */
 
-.btn-edit-profile:hover,
-.btn-add-course:hover {
-  background-color: #45a049;
-}
-
-/* Responsive design */
 @media (max-width: 768px) {
   .profile-header {
     flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-header img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .profile-header .ml-4 {
-    margin-left: 0;
-    margin-top: 10px;
     text-align: center;
   }
-
-  .profile-card {
-    padding: 15px;
+  .profile-header .ml-4 {
+    margin-left: 0;
+    margin-top: 12px;
+  }
+  .flex.flex-col.md\\:flex-row {
+    flex-direction: column !important;
   }
 
-  .courses-section {
-    margin-top: 20px;
+  .w-full {
+    width: 100% !important;
   }
-
-  .btn-edit-profile,
-  .btn-add-course {
-    width: 100%;
-    margin-top: 10px;
-  }
+}
+.btn-edit-profile,
+.btn-add-course {
+  background-color: #4caf50; /* blue-600 */
+  border: none;
+  color: white;
+  padding: 10px 24px; /* padding ngang rộng hơn, tạo nút dài */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem; /* font size chuẩn */
+  cursor: pointer;
+  margin-right: 12px;
+  min-width: 150px; /* đảm bảo nút có độ rộng tối thiểu bằng nhau */
+  text-align: center;
+  transition: background-color 0.3s ease;
 }

@@ -1,0 +1,10 @@
+{
+  "_id": "6648f4d924cde50d87b113f9",
+  "name": "Nguyễn Văn A",
+  "userId": "6648f4a824cde50d87b113f7",
+  "email": "nguyenvana@example.com",
+  "password": "$2b$10$8fj29KJsaKjhfKJHd78sdY1KMqA87b7Ls9JyxDwWDZDo0GvB5MKjy",
+  "phoneNumber": "0987654321",
+  "avatarUrl": "https://i.pravatar.cc/150?img=12",
+  "course": [1, 3]
+}

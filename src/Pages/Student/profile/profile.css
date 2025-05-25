@@ -1,10 +1,9 @@
-/* profile.css */
-
 /* Container chung */
 .profile-container {
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif;
   background-color: #f9fafb;
   padding: 20px;
+  margin-top: 80px;
 }
 
 .container {
@@ -12,88 +11,84 @@
   margin: 0 auto;
 }
 
+/* Card thông tin học viên */
 .profile-card {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.profile-header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.profile-header img {
-  border-radius: 50%;
+.profile-header {
+  /* flex container, được dùng chung trong profile-card */
 }
 
-.profile-header .ml-4 {
+.profile-avatar {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.ml-4 {
   margin-left: 16px;
 }
 
-.profile-header h2 {
+.profile-details h2 {
   font-size: 1.5rem;
   color: #333;
+  margin: 0 0 8px 0;
 }
 
-.profile-header p {
+.profile-details p {
   font-size: 0.875rem;
   color: #666;
+  margin: 2px 0;
 }
 
 /* Courses Section */
-.bg-white {
+.courses-section {
   background-color: #ffffff;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.rounded-lg {
+  padding: 24px;
   border-radius: 8px;
-}
-
-.shadow-md {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 16px;
 }
 
-.text-lg {
+.courses-section__title {
   font-size: 1.125rem;
-}
-
-.font-bold {
-  font-weight: bold;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.text-gray-600 {
-  color: #4b5563;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .course-item {
   margin-bottom: 12px;
 }
 
-.course-item h4 {
+.course-item__title {
   font-size: 1rem;
   font-weight: 600;
   color: #333;
+  margin: 0 0 4px 0;
 }
 
-.course-item p {
+.course-item__status {
   font-size: 0.875rem;
   color: #4b5563;
+  margin: 0;
 }
 
-/* Buttons */
+/* Nút chức năng */
+.student-profile__actions {
+  margin-top: 16px;
+}
+
 .btn-edit-profile,
-.btn-add-course {
+.btn-enroll-course {
   background-color: #4caf50;
   color: white;
   border: none;
@@ -106,30 +101,26 @@
 }
 
 .btn-edit-profile:hover,
-.btn-add-course:hover {
+.btn-enroll-course:hover {
   background-color: #45a049;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .profile-header {
+  .profile-card {
     flex-direction: column;
     align-items: center;
   }
 
-  .profile-header img {
+  .profile-avatar {
     width: 80px;
     height: 80px;
   }
 
-  .profile-header .ml-4 {
+  .ml-4 {
     margin-left: 0;
     margin-top: 10px;
     text-align: center;
-  }
-
-  .profile-card {
-    padding: 15px;
   }
 
   .courses-section {
@@ -137,8 +128,9 @@
   }
 
   .btn-edit-profile,
-  .btn-add-course {
+  .btn-enroll-course {
     width: 100%;
     margin-top: 10px;
+    margin-right: 0;
   }
 }

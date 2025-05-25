@@ -1,63 +1,88 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "../../../components/context/AuthContext";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import studentData from "../../../db/student.json"; // Mock data học viên
+import courseData from "../../../db/course.json"; // Mock data khóa học
 import "./profile.css";
 
-export default function Profile() {
-  const { user } = useAuth(); // Lấy thông tin user từ context
-  const [studentInfo, setStudentInfo] = useState(null); // Trạng thái lưu thông tin học viên
+const StudentProfile = () => {
+  const [student, setStudent] = useState(null);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleEditProfile = () => {
+    navigate("/student/edit-profile");
+  };
+
+  const handleEnrollCourse = () => {
+    navigate("/student/enroll-course");
+  };
 
   useEffect(() => {
-    // Lấy thông tin học viên từ API (hoặc từ backend) sau khi trang được tải
-    const fetchStudentProfile = async () => {
-      try {
-        const response = await fetch(`/api/student/profile/${user.email}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch student profile");
-        }
-        const data = await response.json();
-        setStudentInfo(data.updatedData); // Lưu thông tin học viên vào state
-      } catch (error) {
-        console.error("Failed to fetch student profile:", error);
-      }
-    };
-
-    if (user) {
-      fetchStudentProfile();
+    if (studentData) {
+      setStudent(studentData);
     }
-  }, [user]);
+    const enrolledIds = studentData?.course || [];
 
-  if (!studentInfo) {
-    return <div>Loading...</div>;
+    const filteredCourses = courseData.filter((course) =>
+      enrolledIds.includes(course.id)
+    );
+    setEnrolledCourses(filteredCourses);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <div className="student-profile__loading">Đang tải dữ liệu...</div>;
   }
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <h1>{studentInfo.name}'s Profile</h1>
-      </div>
-
-      <div className="profile-body">
-        <div className="profile-info">
-          <div className="profile-item">
-            <label>Email:</label>
-            <span>{studentInfo.email}</span>
-          </div>
-          <div className="profile-item">
-            <label>Phone Number:</label>
-            <span>{studentInfo.phoneNumber}</span>
-          </div>
-          <div className="profile-item">
-            <label>Avatar:</label>
-            <div className="profile-avatar">
-              <img src={studentInfo.avatarUrl} alt="Avatar" />
-            </div>
+      <div className="container">
+        {/* Thông tin học viên */}
+        <div className="profile-card profile-header">
+          <img
+            alt="Avatar"
+            className="profile-avatar"
+            src={student?.avatarUrl || "https://placehold.co/100x100"}
+            width={100}
+            height={100}
+          />
+          <div className="profile-details ml-4">
+            <h2>{student?.name}</h2>
+            <p>{student?.email}</p>
+            <p>{student?.phoneNumber}</p>
           </div>
         </div>
 
-        <div className="profile-actions">
-          <button>Edit Profile</button>
+        {/* Danh sách khóa học */}
+        <div className="courses-section">
+          <h3 className="courses-section__title">Khóa học đã đăng ký</h3>
+          {enrolledCourses.length > 0 ? (
+            enrolledCourses.map((course) => (
+              <div key={course.id} className="course-item">
+                <h4 className="course-item__title">{course.title}</h4>
+                <p className="course-item__status">
+                  Trạng thái: {course.status}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>Bạn chưa đăng ký khóa học nào</p>
+          )}
+        </div>
+
+        {/* Nút chức năng */}
+        <div className="student-profile__actions">
+          <button className="btn-edit-profile" onClick={handleEditProfile}>
+            Chỉnh sửa thông tin
+          </button>
+          <button className="btn-enroll-course" onClick={handleEnrollCourse}>
+            Đăng ký khóa học mới
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default StudentProfile;

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add Student</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+      }
+      label {
+        display: inline-block;
+        width: 100px;
+        margin-top: 10px;
+      }
+      input,
+      select {
+        margin-top: 10px;
+      }
+      .success {
+        color: green;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Add Student</h2>
+
+    <form id="studentForm" onsubmit="addStudent(event)">
+      <label>Name:</label>
+      <input type="text" id="name" required /><br />
+
+      <label>Date:</label>
+      <input type="date" id="date" required /><br />
+
+      <label>Gender:</label>
+      <input type="radio" name="gender" value="1" required /> Male
+      <input type="radio" name="gender" value="0" /> Female<br />
+
+      <label>Departments:</label>
+      <select id="department" required>
+        <option value="">-- Select --</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="Software Engineering">Software Engineering</option>
+        <option value="Information Assurance">
+          Information Assurance
+        </option></select
+      ><br /><br />
+
+      <button type="submit">Save</button>
+    </form>
+
+    <div id="result" class="success"></div>
+
+    <script>
+      function addStudent(event) {
+        event.preventDefault(); // Ngăn reload lại trang
+
+        const name = document.getElementById("name").value;
+        const date = document.getElementById("date").value;
+        const gender = document.querySelector(
+          'input[name="gender"]:checked'
+        ).value;
+        const department = document.getElementById("department").value;
+
+        // Kiểm tra đơn giản (nếu cần)
+        if (!name || !date || !gender || !department) {
+          alert("Please fill in all fields!");
+          return;
+        }
+
+        // Giả lập lưu thành công
+        document.getElementById("result").textContent =
+          "add student successful!";
+
+        // Xoá form sau khi lưu thành công (nếu muốn)
+        document.getElementById("studentForm").reset();
+      }
+    </script>
+  </body>
+</html>

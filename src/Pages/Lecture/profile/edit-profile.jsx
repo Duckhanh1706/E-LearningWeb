@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./editProfile.css";
 
-const EditProfile = () => {
+const EditStudentProfile = () => {
   const navigate = useNavigate();
 
-  const [lecturer, setLecturer] = useState({
+  const [student, setStudent] = useState({
     name: "",
     avatarUrl: null,
     bio: "",
@@ -18,16 +18,16 @@ const EditProfile = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "email" || name === "phone") {
-      setLecturer((prev) => ({
+    if (name === "phone") {
+      setStudent((prev) => ({
         ...prev,
         contact: {
           ...prev.contact,
-          [name]: value,
+          phone: value,
         },
       }));
     } else {
-      setLecturer((prev) => ({
+      setStudent((prev) => ({
         ...prev,
         [name]: value,
       }));
@@ -37,7 +37,7 @@ const EditProfile = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setLecturer((prev) => ({
+      setStudent((prev) => ({
         ...prev,
         avatarUrl: file,
       }));
@@ -48,24 +48,24 @@ const EditProfile = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", lecturer.name);
-    formData.append("bio", lecturer.bio);
-    formData.append("contact[email]", lecturer.contact.email);
-    formData.append("contact[phone]", lecturer.contact.phone);
-    if (lecturer.avatarUrl) {
-      formData.append("uploaded_file", lecturer.avatarUrl);
+    formData.append("name", student.name);
+    formData.append("bio", student.bio);
+    formData.append("contact[email]", student.contact.email);
+    formData.append("contact[phone]", student.contact.phone);
+    if (student.avatarUrl) {
+      formData.append("uploaded_file", student.avatarUrl);
     }
 
     try {
-      const response = await fetch("/api/update-instructor-profile", {
+      const response = await fetch("/api/update-student-profile", {
         method: "PUT",
         body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message); // Log message from backend
-        navigate("/lecturer/profile");
+        console.log(data.message);
+        navigate("/student/profile");
       } else {
         console.error("Cập nhật thông tin thất bại.");
       }
@@ -76,17 +76,29 @@ const EditProfile = () => {
 
   return (
     <div className="edit-profile-container">
-      <h2>Chỉnh sửa thông tin giảng viên</h2>
+      <h2>Chỉnh sửa thông tin học viên</h2>
       <form onSubmit={handleSubmit} className="edit-profile-form">
         <div className="form-group">
           <label>Họ và tên</label>
           <input
             type="text"
             name="name"
-            value={lecturer.name}
+            value={student.name}
             onChange={handleChange}
             className="input-field"
             required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Email (không thể sửa)</label>
+          <input
+            type="email"
+            name="email"
+            value={student.contact.email}
+            disabled
+            readOnly
+            className="input-field"
           />
         </div>
 
@@ -101,11 +113,11 @@ const EditProfile = () => {
           />
         </div>
 
-        {lecturer.avatarUrl && (
+        {student.avatarUrl && (
           <div className="preview-image">
-            <p>Ảnh đã chọn: {lecturer.avatarUrl.name}</p>
+            <p>Ảnh đã chọn: {student.avatarUrl.name}</p>
             <img
-              src={URL.createObjectURL(lecturer.avatarUrl)}
+              src={URL.createObjectURL(student.avatarUrl)}
               alt="Avatar Preview"
               width="100"
               height="100"
@@ -117,7 +129,7 @@ const EditProfile = () => {
           <label>Mô tả</label>
           <textarea
             name="bio"
-            value={lecturer.bio}
+            value={student.bio}
             onChange={handleChange}
             className="textarea-field"
           />
@@ -128,7 +140,7 @@ const EditProfile = () => {
           <input
             type="text"
             name="phone"
-            value={lecturer.contact.phone}
+            value={student.contact.phone}
             onChange={handleChange}
             className="input-field"
           />
@@ -142,4 +154,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditStudentProfile;

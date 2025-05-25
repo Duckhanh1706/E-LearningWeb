@@ -92,3 +92,52 @@
     font-size: 0.9rem;
   }
 }
+.video-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.video-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.video-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.delete-video-btn,
+.add-description-btn,
+.add-video-btn,
+.add-assignment-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.delete-video-btn {
+  background-color: #dc3545;
+}
+
+.add-description-btn {
+  background-color: #ffc107;
+  color: black;
+}
+
+.add-video-btn {
+  background-color: #28a745;
+  margin-top: 10px;
+}
+
+.add-video-btn:hover {
+  background-color: #218838;
+}

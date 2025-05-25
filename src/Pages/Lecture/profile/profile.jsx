@@ -26,7 +26,7 @@
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const lecturerResponse = await fetch("/teacher/profile");
+//         const lecturerResponse = await fetch("http://localhost:5000/teacher/profile");
 //         const lecturerData = await lecturerResponse.json();
 
 //         const coursesResponse = await fetch("/teaching");
@@ -170,23 +170,23 @@ const LecProfile = () => {
                 <div className="ml-4">
                   <h2 className="text-xl font-bold">{lecturer.name}</h2>
                   <p className="text-gray-600">{lecturer.bio}</p>
+                  <div className="mt-4">
+                    <p className="text-gray-600">
+                      <i className="fas fa-user-friends"></i>{" "}
+                      {lecturer.followers} người theo dõi
+                    </p>
+                    <p className="text-gray-600">
+                      <i className="fas fa-calendar-alt"></i> Tham gia từ{" "}
+                      {lecturer.joinedDate}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-4">
-                <p className="text-gray-600">
-                  <i className="fas fa-user-friends"></i> {lecturer.followers}{" "}
-                  người theo dõi
-                </p>
-                <p className="text-gray-600">
-                  <i className="fas fa-calendar-alt"></i> Tham gia từ{" "}
-                  {lecturer.joinedDate}
-                </p>
               </div>
             </div>
           </div>
 
           {/* Courses Section */}
-          <div className="w-full md:w-2/3 p-4">
+          <div className="w-full ">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-bold">Khóa học đã giảng dạy</h3>
               <div className="mt-4">

@@ -22,7 +22,7 @@
   display: inline-block;
   box-sizing: border-box;
   background-color: transparent;
-  font-size: 16px16px;
+  font-size: 16px;
 }
 
 .role-option.active .dot {
