@@ -63,6 +63,46 @@ export default function LoginForm({ handleCancel, showRegister }) {
     }, 800); // fake delay
   };
 
+  /* const loginUser = () => {
+    setError("");
+
+    if (!isValidEmail(email)) {
+      setError("Vui lòng nhập email hợp lệ.");
+      return;
+    }
+
+    if (password === "" || password.length <= 4) {
+      setError("Vui lòng nhập mật khẩu từ 5 ký tự trở lên.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    fetch("https://api.example.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, role }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Email, mật khẩu hoặc vai trò không đúng.");
+        }
+        return res.json();
+      })
+      .then((user) => {
+        setIsLoading(false);
+        console.log("Login successful:", user);
+        login(user);
+        navigate(`/${role}/profile`);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err.message || "Đăng nhập thất bại.");
+      });
+  };
+*/
   return (
     <div className="form fadeIn" style={{ maxWidth: 500 }}>
       <Title

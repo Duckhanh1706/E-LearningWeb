@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import studentData from "../../../db/student.json"; // Mock data học viên
-import courseData from "../../../db/course.json"; // Mock data khóa học
+import studentData from "../../../db/student.json";
+import coursesData from "../../../db/course.json";
 import "./profile.css";
 
 const StudentProfile = () => {
   const [student, setStudent] = useState(null);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
   const handleEditProfile = () => {
-    navigate("/student/edit-profile");
+    navigate("/student/edit-stu-profile");
   };
 
   const handleEnrollCourse = () => {
@@ -19,20 +21,33 @@ const StudentProfile = () => {
   };
 
   useEffect(() => {
-    if (studentData) {
-      setStudent(studentData);
-    }
-    const enrolledIds = studentData?.course || [];
+    try {
+      setLoading(true);
+      setError(null);
 
-    const filteredCourses = courseData.filter((course) =>
-      enrolledIds.includes(course.id)
-    );
-    setEnrolledCourses(filteredCourses);
-    setLoading(false);
+      // Lấy dữ liệu student từ file JSON import
+      setStudent(studentData);
+
+      // Lọc các khóa học học viên đã đăng ký dựa theo mảng id trong studentData.course
+      const enrolledIds = studentData.course || [];
+      const filteredCourses = coursesData.filter((course) =>
+        enrolledIds.includes(course.id)
+      );
+      setEnrolledCourses(filteredCourses);
+
+      setLoading(false);
+    } catch (err) {
+      setError("Lỗi khi tải dữ liệu giả lập");
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {
     return <div className="student-profile__loading">Đang tải dữ liệu...</div>;
+  }
+
+  if (error) {
+    return <div className="student-profile__error">Lỗi: {error}</div>;
   }
 
   return (
@@ -62,7 +77,7 @@ const StudentProfile = () => {
               <div key={course.id} className="course-item">
                 <h4 className="course-item__title">{course.title}</h4>
                 <p className="course-item__status">
-                  Trạng thái: {course.status}
+                  Trạng thái: {course.courseStatus}
                 </p>
               </div>
             ))

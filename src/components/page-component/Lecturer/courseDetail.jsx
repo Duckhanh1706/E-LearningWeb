@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./courseDetail.css";
+import courseData from "../../../db/course.json";
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -10,9 +11,7 @@ const CourseDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // State mới để lưu video đang chỉnh sửa (id của video)
   const [editingVideoId, setEditingVideoId] = useState(null);
-  // State form edit video
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editFile, setEditFile] = useState(null);
@@ -21,74 +20,32 @@ const CourseDetail = () => {
   const [editMessage, setEditMessage] = useState("");
 
   useEffect(() => {
-    const fetchCourseData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/teacher/teaching/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Không thể lấy dữ liệu khóa học");
-        }
-        const data = await response.json();
-        setCourse(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourseData();
+    const foundCourse = courseData.find((c) => c.id.toString() === id);
+    if (foundCourse) {
+      setCourse(foundCourse);
+    } else {
+      setError("Không tìm thấy khóa học.");
+    }
+    setLoading(false);
   }, [id]);
 
   const isFromCurrentCourses = location.state?.fromCurrentCourses || false;
 
-  const handleAddVideo = () => {
-    navigate(`/teacher/teaching/${course.id}/create-video`);
-  };
-
-  const handleDeleteVideo = async (videoId) => {
+  const handleDeleteVideo = (videoId) => {
     if (!window.confirm("Bạn có chắc muốn xóa video này không?")) return;
 
-    try {
-      const res = await fetch(
-        `http://localhost:5000/teacher/teaching/${course.id}/delete/${videoId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      videoLists: prevCourse.videoLists.filter((v) => v.id !== videoId),
+    }));
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Xóa video thất bại");
-      }
-
-      alert("Xóa video thành công");
-
-      // Cập nhật state xóa video khỏi list luôn
-      setCourse((prevCourse) => ({
-        ...prevCourse,
-        videos: prevCourse.videos.filter((v) => v.id !== videoId),
-      }));
-    } catch (error) {
-      alert("Lỗi khi xóa video: " + error.message);
-    }
+    alert("Xóa video thành công");
   };
 
   const handleAddDescription = (videoId) => {
     alert(`Thêm mô tả cho video có ID: ${videoId}`);
-    // Hiện popup hoặc giao diện thêm mô tả video
   };
 
-  // Mở form edit video
   const handleEditVideoClick = (video) => {
     setEditingVideoId(video.id);
     setEditTitle(video.title);
@@ -98,68 +55,36 @@ const CourseDetail = () => {
     setEditMessage("");
   };
 
-  // Đóng form edit video
   const handleCancelEdit = () => {
     setEditingVideoId(null);
     setEditError("");
     setEditMessage("");
   };
 
-  // Xử lý submit form edit video
-  const handleEditSubmit = async (e) => {
+  const handleEditSubmit = (e) => {
     e.preventDefault();
     setEditLoading(true);
     setEditError("");
     setEditMessage("");
 
-    try {
-      const formData = new FormData();
-      formData.append("titleVideo", editTitle);
-      formData.append("videoDescription", editDescription);
-      if (editFile) formData.append("upload_file", editFile);
-
-      const res = await fetch(
-        `http://localhost:5000/teacher/teaching/${course.id}/edit/${editingVideoId}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || "Cập nhật thất bại");
-      }
-
-      const data = await res.json();
-      setEditMessage(data.message);
-
-      // Cập nhật video trong state course.videos với dữ liệu mới
+    setTimeout(() => {
       setCourse((prevCourse) => {
-        const updatedVideos = prevCourse.videos.map((v) =>
+        const updatedVideos = prevCourse.videoLists.map((v) =>
           v.id === editingVideoId
             ? {
                 ...v,
-                title: data.videoData.title,
-                videoDescription: data.videoData.videoDescription,
-                urlVideo: data.videoData.urlVideo,
-                uploadDate: data.videoData.uploadDate,
+                title: editTitle,
+                videoDescription: editDescription,
               }
             : v
         );
-        return { ...prevCourse, videos: updatedVideos };
+        return { ...prevCourse, videoLists: updatedVideos };
       });
 
-      // Đóng form edit
+      setEditMessage("Cập nhật video thành công");
       setEditingVideoId(null);
-    } catch (err) {
-      setEditError(err.message);
-    } finally {
       setEditLoading(false);
-    }
+    }, 1000);
   };
 
   if (loading) return <div>Đang tải dữ liệu...</div>;
@@ -170,17 +95,52 @@ const CourseDetail = () => {
     <div className="course-detail-container">
       <h2 className="course-title">{course.title}</h2>
 
-      {/* ... các section khác như ban đầu ... */}
+      <section className="course-info-section">
+        <h3>Thông tin khóa học</h3>
+        <p>
+          <strong>Mô tả:</strong> {course.description}
+        </p>
+
+        {course.instructor && (
+          <>
+            <p>
+              <strong>Giảng viên:</strong> {course.instructor.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {course.instructor.email}
+            </p>
+            <p>
+              <strong>Mô tả giảng viên:</strong> {course.instructor.description}
+            </p>
+          </>
+        )}
+
+        {course.price !== undefined && (
+          <p>
+            <strong>Giá:</strong> {course.price.toLocaleString()} VNĐ
+          </p>
+        )}
+
+        {course.courseStatus && (
+          <p>
+            <strong>Trạng thái khóa học:</strong> {course.courseStatus}
+          </p>
+        )}
+        {course.student && (
+          <p>
+            <strong>Số học viên đã đăng ký:</strong> {course.student.length}
+          </p>
+        )}
+      </section>
 
       <section className="course-section">
         <h3>Danh sách Video</h3>
 
-        {course.videos && course.videos.length > 0 ? (
+        {course.videoLists && course.videoLists.length > 0 ? (
           <ul className="video-list">
-            {course.videos.map((video) => (
+            {course.videoLists.map((video) => (
               <li key={video.id} className="video-item">
                 {editingVideoId === video.id ? (
-                  // Form edit video
                   <form onSubmit={handleEditSubmit} className="edit-video-form">
                     {editError && <p style={{ color: "red" }}>{editError}</p>}
                     {editMessage && (
@@ -208,6 +168,7 @@ const CourseDetail = () => {
                         type="file"
                         accept="video/*"
                         onChange={(e) => setEditFile(e.target.files[0])}
+                        disabled
                       />
                     </div>
                     <button type="submit" disabled={editLoading}>
@@ -251,13 +212,6 @@ const CourseDetail = () => {
           </ul>
         ) : (
           <p>Chưa có video nào</p>
-        )}
-
-        {/* Nút thêm video */}
-        {isFromCurrentCourses && (
-          <button className="add-video-btn" onClick={handleAddVideo}>
-            + Thêm Video
-          </button>
         )}
       </section>
 

@@ -5,22 +5,41 @@ import "./createCourse.css";
 const CreateCourse = () => {
   const [course, setCourse] = useState({
     title: "",
-    instructor: "",
-    status: "In Progress",
+    instructorName: "",
+    status: "Not Started",
     description: "",
-    startDate: "",
-    endDate: "",
     assignments: "",
+    price: "",
+    videoLists: [],
   });
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCourse({
-      ...course,
+    setCourse((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+  };
+
+  // Khi chọn file sẽ tự động cập nhật videoLists luôn
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setCourse((prev) => ({
+      ...prev,
+      videoLists: [...prev.videoLists, ...files],
+    }));
+
+    // Reset lại input để có thể chọn lại file nếu muốn
+    e.target.value = "";
+  };
+
+  const handleRemoveVideo = (index) => {
+    setCourse((prev) => ({
+      ...prev,
+      videoLists: prev.videoLists.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -29,11 +48,26 @@ const CreateCourse = () => {
     const isConfirmed = window.confirm("Bạn có muốn tạo khóa học mới không?");
 
     if (isConfirmed) {
-      // Nếu nhấn Yes, tạo khóa học và chuyển đến trang profile
-      console.log("Khóa học mới đã được tạo:", course);
+      const newCourse = {
+        ...course,
+        instructor: {
+          id: Date.now(),
+          name: course.instructorName,
+          email: "",
+          avatarUrl: "",
+          description: "",
+          pendingStatus: "approved",
+        },
+        courseStatus: course.status,
+        student: [],
+        pendingStatus: "approved",
+      };
+
+      console.log("Khóa học mới đã được tạo:", newCourse);
+      // TODO: gửi newCourse lên server hoặc lưu local
+
       navigate("/lecturer/profile");
     } else {
-      // Nếu nhấn Cancel, chỉ đơn giản là quay lại trang profile
       navigate("/lecturer/profile");
     }
   };
@@ -42,6 +76,7 @@ const CreateCourse = () => {
     <div className="create-course-container">
       <h2>Tạo khóa học mới</h2>
       <form onSubmit={handleSubmit} className="create-course-form">
+        {/* Các input khác tương tự */}
         <div className="form-group">
           <label htmlFor="title">Tiêu đề khóa học</label>
           <input
@@ -54,13 +89,14 @@ const CreateCourse = () => {
             className="input-field"
           />
         </div>
+
         <div className="form-group">
-          <label htmlFor="instructor">Giảng viên</label>
+          <label htmlFor="instructorName">Tên giảng viên</label>
           <input
             type="text"
-            id="instructor"
-            name="instructor"
-            value={course.instructor}
+            id="instructorName"
+            name="instructorName"
+            value={course.instructorName}
             onChange={handleChange}
             required
             className="input-field"
@@ -78,30 +114,7 @@ const CreateCourse = () => {
             className="textarea-field"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="startDate">Ngày bắt đầu</label>
-          <input
-            type="date"
-            id="startDate"
-            name="startDate"
-            value={course.startDate}
-            onChange={handleChange}
-            required
-            className="input-field"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="endDate">Ngày kết thúc</label>
-          <input
-            type="date"
-            id="endDate"
-            name="endDate"
-            value={course.endDate}
-            onChange={handleChange}
-            required
-            className="input-field"
-          />
-        </div>
+
         <div className="form-group">
           <label htmlFor="assignments">Nhiệm vụ</label>
           <textarea
@@ -113,6 +126,52 @@ const CreateCourse = () => {
             className="textarea-field"
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="price">Giá khóa học (VNĐ)</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={course.price}
+            onChange={handleChange}
+            min="0"
+            className="input-field"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="videoFileInput">Chọn file video</label>
+          <input
+            type="file"
+            id="videoFileInput"
+            accept="video/*"
+            multiple
+            onChange={handleFileChange}
+            className="input-field"
+          />
+        </div>
+
+        {/* Hiển thị danh sách video đã thêm luôn */}
+        {course.videoLists.length > 0 && (
+          <div className="form-group">
+            <label>Danh sách video đã thêm:</label>
+            <ul className="video-list">
+              {course.videoLists.map((file, index) => (
+                <li key={index} className="video-item">
+                  {file.name}{" "}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveVideo(index)}
+                    className="remove-btn"
+                  >
+                    Xóa
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <button type="submit" className="ring-btn">
           Tạo khóa học
         </button>

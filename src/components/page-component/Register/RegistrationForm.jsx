@@ -9,6 +9,7 @@ export default function RegisterForm({ onRegistered }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(""); // thêm state phone
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // state confirm password mới
   const [role, setRole] = useState("student");
 
   const nameRef = useRef();
@@ -23,6 +24,7 @@ export default function RegisterForm({ onRegistered }) {
     setEmail("");
     setPhone(""); // reset phone
     setPassword("");
+    setConfirmPassword(""); // reset confirm password
     setRole("student");
   };
 
@@ -33,6 +35,8 @@ export default function RegisterForm({ onRegistered }) {
     if (!email.trim()) return alert("Please enter your email!");
     if (password.length <= 4)
       return alert("Password must be more than 4 characters!");
+    if (password !== confirmPassword)
+      return alert("Password and Confirm Password do not match!");
 
     const newUser = { name, email, phone, password, role };
     console.log("Registration successful:", newUser);
@@ -104,6 +108,14 @@ export default function RegisterForm({ onRegistered }) {
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="new-password"
+        />
+        <FormGroup
+          label="Confirm Password"
+          type="password"
+          placeholder="Confirm your password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           autoComplete="new-password"
         />
 

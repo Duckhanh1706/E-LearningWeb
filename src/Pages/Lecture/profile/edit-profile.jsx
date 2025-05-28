@@ -76,7 +76,7 @@ const EditStudentProfile = () => {
 
   return (
     <div className="edit-profile-container">
-      <h2>Chỉnh sửa thông tin học viên</h2>
+      <h2>Chỉnh sửa thông tin giảng viên</h2>
       <form onSubmit={handleSubmit} className="edit-profile-form">
         <div className="form-group">
           <label>Họ và tên</label>
@@ -87,18 +87,6 @@ const EditStudentProfile = () => {
             onChange={handleChange}
             className="input-field"
             required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Email (không thể sửa)</label>
-          <input
-            type="email"
-            name="email"
-            value={student.contact.email}
-            disabled
-            readOnly
-            className="input-field"
           />
         </div>
 

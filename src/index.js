@@ -30,15 +30,18 @@ import Schedule from "./Pages/Lecture/course/schedule";
 import CurrentCourses from "./Pages/Lecture/course/currentCoures";
 import CompletedCourses from "./Pages/Lecture/course/completedCourses";
 import CourseDetail from "./components/page-component/Lecturer/courseDetail";
-import EditProfile from "./Pages/Lecture/profile/edit-profile";
+import EditLecProfile from "./Pages/Lecture/profile/edit-profile";
+import EditStuProfile from "./Pages/Student/profile/editProfile";
 import RegisterStudentInfo from "./components/page-component/Register/Student";
 import RegisterTeacherInfo from "./components/page-component/Register/Lecturer";
 // Context
 import { AuthProvider, useAuth } from "./components/context/AuthContext";
 import CreateCourse from "./Pages/Lecture/course/createCourse";
 
-import MyCourses from "./Pages/Student/course/courses";
+import MyCourses from "./Pages/Student/course/myCourses";
 import CourseList from "./Pages/Student/course/courseList";
+import CourseVideoList from "./components/page-component/Student/VideoList";
+import CourseRegister from "./Pages/Student/course/enrollCourse";
 
 // Route guard
 function ProtectedRoute({ children, role }) {
@@ -87,7 +90,7 @@ const router = createBrowserRouter([
       { path: "currentCourses", element: <CurrentCourses /> },
       { path: "schedule", element: <Schedule /> },
       { path: "course/:id", element: <CourseDetail /> },
-      { path: "edit-profile", element: <EditProfile /> },
+      { path: "edit-lec-profile", element: <EditLecProfile /> },
       { path: "create-Course", element: <CreateCourse /> },
       { path: "course/:id/add-assignment", element: <HomeWork /> },
     ],
@@ -103,10 +106,11 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <StudentDashboard /> },
       { path: "profile", element: <StuProfile /> },
       { path: "course", element: <MyCourses /> },
-      { path: "viewCourse", element: <CourseList /> },
-      { path: "edit-profile", element: <EditProfile /> },
+      //{ path: "viewCourse", element: <CourseList /> },
+      { path: "edit-stu-profile", element: <EditStuProfile /> },
       { path: "course/:courseId", element: <CourseDetail /> },
       { path: "course/:courseId/videos", element: <CourseVideoList /> },
+      { path: "enroll-course", element: <CourseRegister /> },
     ],
   },
 ]);

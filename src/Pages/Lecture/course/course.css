@@ -2,7 +2,7 @@
 .course-container {
   margin-top: 2rem;
   padding: 1.5rem;
-  padding-top: 90px;
+  padding-top: 70px;
   background-color: #f9fafb;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -27,19 +27,13 @@
 /* Danh sách các khóa học */
 .course-list {
   list-style-type: none;
-  margin: 0;
+  margin: 5px;
   padding: 0;
 }
 
 .course-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.course-item:last-child {
-  border-bottom: none;
 }
 
 .course-item span {

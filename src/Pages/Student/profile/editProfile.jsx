@@ -1,41 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import studentData from "../../../db/student.json"; // Dữ liệu mock
-import "./profile.css";
+import "./editProfile.css";
 
-const EditProfile = () => {
-  const [formData, setFormData] = useState({
+const EditStudentProfile = () => {
+  const navigate = useNavigate();
+
+  const [student, setStudent] = useState({
     name: "",
+    avatarUrl: null,
     bio: "",
     contact: {
       email: "",
       phone: "",
     },
   });
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-  const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    if (studentData) {
-      setFormData({
-        name: studentData.name || "",
-        bio: studentData.bio || "",
-        contact: {
-          email: studentData.email || "",
-          phone: studentData.phoneNumber || "",
-        },
-      });
-    }
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "phone") {
-      setFormData((prev) => ({
+      setStudent((prev) => ({
         ...prev,
         contact: {
           ...prev.contact,
@@ -43,7 +27,7 @@ const EditProfile = () => {
         },
       }));
     } else {
-      setFormData((prev) => ({
+      setStudent((prev) => ({
         ...prev,
         [name]: value,
       }));
@@ -51,149 +35,111 @@ const EditProfile = () => {
   };
 
   const handleFileChange = (e) => {
-    setUploadedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      setStudent((prev) => ({
+        ...prev,
+        avatarUrl: file,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-    setMessage("");
-
-    try {
-      // Tạo form data để gửi multipart/form-data
-      const data = new FormData();
-      data.append("name", formData.name);
-      if (uploadedFile) {
-        data.append("uploaded_file", uploadedFile);
-      }
-      data.append("bio", formData.bio);
-      data.append("contact[email]", formData.contact.email); // email cố định, ko đổi
-      data.append("contact[phone]", formData.contact.phone);
-
-      // Giả lập gọi API backend
-      // Bạn đổi URL thành API thật của bạn
-      const response = await fetch("/api/student/profile/update", {
-        method: "POST",
-        body: data,
-      });
-
-      if (!response.ok) {
-        throw new Error("Lỗi khi cập nhật thông tin");
-      }
-
-      const result = await response.json();
-
-      setMessage(result.message || "Cập nhật thành công!");
-      // Cập nhật lại form data theo dữ liệu trả về
-      if (result.updatedData) {
-        setFormData((prev) => ({
-          ...prev,
-          ...result.updatedData,
-          contact: {
-            email: result.updatedData.contact?.email || prev.contact.email,
-            phone: result.updatedData.contact?.phone || prev.contact.phone,
-          },
-        }));
-        setUploadedFile(null);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = null; // reset input file
-        }
-      }
-    } catch (error) {
-      setMessage(error.message);
+    const formData = new FormData();
+    formData.append("name", student.name);
+    formData.append("bio", student.bio);
+    formData.append("contact[email]", student.contact.email);
+    formData.append("contact[phone]", student.contact.phone);
+    if (student.avatarUrl) {
+      formData.append("uploaded_file", student.avatarUrl);
     }
 
-    setLoading(false);
-  };
+    try {
+      const response = await fetch("/api/update-student-profile", {
+        method: "PUT",
+        body: formData,
+      });
 
-  const handleCancel = () => {
-    navigate("/student/profile");
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        navigate("/student/profile");
+      } else {
+        console.error("Cập nhật thông tin thất bại.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi yêu cầu:", error);
+    }
   };
 
   return (
-    <div className="profile-container">
-      <div className="container">
-        <h2>Chỉnh sửa thông tin học viên</h2>
-        {message && (
-          <p style={{ marginBottom: "15px", color: "green" }}>{message}</p>
-        )}
-        <form className="edit-profile-form" onSubmit={handleSubmit}>
-          <label>
-            Tên:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
+    <div className="edit-profile-container">
+      <h2>Chỉnh sửa thông tin học viên</h2>
+      <form onSubmit={handleSubmit} className="edit-profile-form">
+        <div className="form-group">
+          <label>Họ và tên</label>
+          <input
+            type="text"
+            name="name"
+            value={student.name}
+            onChange={handleChange}
+            className="input-field"
+            required
+          />
+        </div>
 
-          <label>
-            Email (không thể sửa):
-            <input
-              type="email"
-              name="email"
-              value={formData.contact.email}
-              disabled
-              readOnly
-            />
-          </label>
+        <div className="form-group">
+          <label>Ảnh đại diện</label>
+          <input
+            type="file"
+            name="avatarUrl"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="input-field"
+          />
+        </div>
 
-          <label>
-            Số điện thoại:
-            <input
-              type="tel"
-              name="phone"
-              value={formData.contact.phone}
-              onChange={handleChange}
-              required
+        {student.avatarUrl && (
+          <div className="preview-image">
+            <p>Ảnh đã chọn: {student.avatarUrl.name}</p>
+            <img
+              src={URL.createObjectURL(student.avatarUrl)}
+              alt="Avatar Preview"
+              width="100"
+              height="100"
             />
-          </label>
-
-          <label>
-            Mô tả (Bio):
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              rows={4}
-              placeholder="Viết mô tả về bạn..."
-            />
-          </label>
-
-          <label>
-            Ảnh đại diện (Upload mới):
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              ref={fileInputRef}
-            />
-          </label>
-
-          <div className="form-buttons">
-            <button
-              type="submit"
-              className="btn-edit-profile"
-              disabled={loading}
-            >
-              {loading ? "Đang cập nhật..." : "Lưu thay đổi"}
-            </button>
-            <button
-              type="button"
-              className="btn-enroll-course"
-              onClick={handleCancel}
-              disabled={loading}
-            >
-              Hủy
-            </button>
           </div>
-        </form>
-      </div>
+        )}
+
+        <div className="form-group">
+          <label>Mô tả</label>
+          <textarea
+            name="bio"
+            value={student.bio}
+            onChange={handleChange}
+            className="textarea-field"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Số điện thoại</label>
+          <input
+            type="text"
+            name="phone"
+            value={student.contact.phone}
+            onChange={handleChange}
+            className="input-field"
+          />
+        </div>
+
+        <button type="submit" className="ring-btn">
+          Lưu thay đổi
+        </button>
+      </form>
     </div>
   );
 };
 
-export default EditProfile;
+export default EditStudentProfile;

@@ -1,7 +1,7 @@
 .profile-container {
   background-color: #f9fafb;
-  min-height: 100vh;
-  padding: 20px 0;
+  min-height: 50vh;
+  padding: 10px 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .mt-4 {
@@ -20,7 +20,7 @@
 .profile-header {
   display: flex;
   align-items: center; /* Căn giữa theo chiều dọc */
-  gap: 16px; /* Khoảng cách giữa ảnh và text */
+  gap: 10px; /* Khoảng cách giữa ảnh và text */
   justify-content: flex-start; /* Căn trái */
   width: 100%;
 }
@@ -53,18 +53,27 @@
   align-items: center;
   gap: 8px;
 }
+.course-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  padding-top: 40px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .course-item {
+  border: 1px solid #a19191;
   background-color: #e0e7ff; /* light indigo */
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 12px 8px;
   margin-bottom: 12px;
   transition: background-color 0.3s ease;
   cursor: default;
 }
 
 .course-item:hover {
-  background-color: #3e55b3; /* slightly darker on hover */
+  background-color: #4c67d5; /* slightly darker on hover */
 }
 
 .course-item h4 {

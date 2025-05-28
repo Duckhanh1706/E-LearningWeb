@@ -1,16 +1,57 @@
-// src/components/CompletedCourses.jsx
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import course from "../../../db/course.json"; // Import dữ liệu từ file JSON
+import { useNavigate } from "react-router-dom"; // để chuyển trang
+import courseData from "../../../db/course.json";
+import lecturerData from "../../../db/lecturer.json";
 import "./course.css";
 
-const CompletedCourses = () => {
+const CompleteCourses = () => {
   const [courses, setCourses] = useState([]);
+  const [error, setError] = useState(null);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
+
+  const navigate = useNavigate();
+
+  // Giả sử giảng viên hiện tại là giảng viên đầu tiên trong lecturerData
+  // Bạn có thể thay thế bằng lấy từ context, localStorage hoặc props
+  const currentLecturerId = lecturerData.length > 0 ? lecturerData[0].id : null;
 
   useEffect(() => {
-    // Lọc các khóa học có trạng thái "Completed"
-    setCourses(course.filter((course) => course.status === "Completed"));
-  }, []);
+    try {
+      if (!currentLecturerId) {
+        setError("Không tìm thấy thông tin giảng viên hiện tại");
+        return;
+      }
+      // Lọc khóa học đang tiến hành và thuộc giảng viên hiện tại
+      const filteredCourses = courseData.filter(
+        (course) =>
+          course.courseStatus === "Complete" &&
+          course.instructor.id === currentLecturerId
+      );
+      setCourses(filteredCourses);
+    } catch (err) {
+      setError("Lỗi khi tải dữ liệu khóa học");
+    }
+  }, [currentLecturerId]);
+
+  const handleAddAssignmentClick = (courseId) => {
+    setSelectedCourseId(courseId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedCourseId(null);
+  };
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/lecturer/course/${courseId}`);
+  };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="course-container">
@@ -18,23 +59,23 @@ const CompletedCourses = () => {
         {courses.length > 0 ? (
           <ul className="course-list">
             {courses.map((course) => (
-              <li key={course.id} className="course-item">
-                <Link
-                  to={`/lecturer/course/${course.id}`}
-                  className="course-link"
-                >
-                  <span>{course.title}</span>
-                </Link>
-                <span className="course-status">{course.status}</span>
+              <li
+                key={course.id}
+                className="course-item"
+                onClick={() => handleCourseClick(course.id)}
+                style={{ cursor: "pointer" }}
+              >
+                <span>{course.title}</span>
+                <span className="course-status">{course.courseStatus}</span>
               </li>
             ))}
           </ul>
         ) : (
-          <p>No completed courses</p>
+          <p>No courses completed</p>
         )}
       </div>
     </div>
   );
 };
 
-export default CompletedCourses;
+export default CompleteCourses;

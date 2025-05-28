@@ -29,7 +29,7 @@ export default function Dashboard() {
       <nav className="navbar">
         <div className="navbar-logo">
           <a className="navbar-brand">
-            <span className="logo">FZ</span> Education
+            <span className="logo">E</span> -Learning Web
           </a>
           <button className="navbar-toggler" onClick={toggleMenu}>
             {isMenuOpen ? "Close Menu" : "Open Menu"}
@@ -57,7 +57,7 @@ export default function Dashboard() {
                   }
                   onClick={handleNavClick}
                 >
-                  My Courses
+                  Courses Completed
                 </NavLink>
                 <NavLink
                   to="/student/viewCourse"
@@ -66,7 +66,7 @@ export default function Dashboard() {
                   }
                   onClick={handleNavClick}
                 >
-                  Course List
+                  Schedule
                 </NavLink>
                 <NavLink
                   to="/student/cart"

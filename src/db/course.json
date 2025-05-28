@@ -1,42 +1,362 @@
 [
   {
     "id": 1,
-    "title": "Web Development with ReactJS",
-    "instructor": "Nguyen Van A",
-    "status": "In Progress",
-    "description": "An in-depth course on ReactJS, JSX, hooks, and state management.",
-    "startDate": "2025-04-01",
-    "endDate": "2025-06-01",
-    "assignments": "Major assignment, mid-term exam"
+    "title": "ReactJS nâng cao",
+    "description": "Khóa học nâng cao về ReactJS, giúp bạn làm chủ hooks, context, và tối ưu hiệu suất.",
+    "instructor": {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên chuyên sâu về ReactJS và phát triển web.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 499000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
   },
   {
     "id": 2,
-    "title": "Introduction to Python",
-    "instructor": "Tran Thi B",
-    "status": "Completed",
-    "description": "A basic course on Python, variables, loops, functions, and file handling.",
-    "startDate": "2025-01-10",
-    "endDate": "2025-03-10",
-    "assignments": "Weekly small assignments"
+    "title": "TypeScript nâng cao",
+    "description": "Khóa học giúp bạn làm chủ TypeScript, từ typing đến generics và advanced types.",
+    "instructor": {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên chuyên sâu về ReactJS và phát triển web.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 429000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
   },
   {
     "id": 3,
-    "title": "Backend Development with Node.js",
-    "instructor": "Le Van C",
-    "status": "In Progress",
-    "description": "Learn how to build APIs with Express, MongoDB, and JWT.",
-    "startDate": "2025-04-15",
-    "endDate": "2025-07-01",
-    "assignments": "Final project, weekly quizzes"
+    "title": "Redux từ cơ bản đến nâng cao",
+    "description": "Hướng dẫn Redux từ cơ bản đến nâng cao, bao gồm toolkit và middleware.",
+    "instructor": {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên chuyên sâu về ReactJS và phát triển web.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 459000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
   },
   {
     "id": 4,
-    "title": "Basic Machine Learning",
-    "instructor": "Pham Thi D",
-    "status": "Not Started",
-    "description": "Overview of ML, supervised learning, and basic algorithms.",
-    "startDate": "2025-05-01",
-    "endDate": "2025-08-01",
-    "assignments": "Lab assignments and mini-project"
+    "title": "Testing React với Jest",
+    "description": "Khóa học chuyên sâu về test React sử dụng Jest và React Testing Library.",
+    "instructor": {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên chuyên sâu về ReactJS và phát triển web.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 399000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 5,
+    "title": "React với Context API",
+    "description": "Khóa học về Context API trong React giúp bạn quản lý state dễ dàng hơn.",
+    "instructor": {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên chuyên sâu về ReactJS và phát triển web.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 379000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 6,
+    "title": "Python cơ bản",
+    "description": "Học Python từ cơ bản, phù hợp cho người mới bắt đầu lập trình.",
+    "instructor": {
+      "id": 2,
+      "name": "Trần Thị D",
+      "email": "tranthid@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên Python, AI và phát triển phần mềm.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 359000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
+  },
+  {
+    "id": 7,
+    "title": "OOP với Python",
+    "description": "Khóa học lập trình hướng đối tượng (OOP) bằng Python từ cơ bản đến nâng cao.",
+    "instructor": {
+      "id": 2,
+      "name": "Trần Thị D",
+      "email": "tranthid@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên Python, AI và phát triển phần mềm.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 419000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 8,
+    "title": "Xử lý file và dữ liệu với Python",
+    "description": "Học cách đọc, ghi và xử lý dữ liệu trong các định dạng file bằng Python.",
+    "instructor": {
+      "id": 2,
+      "name": "Trần Thị D",
+      "email": "tranthid@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên Python, AI và phát triển phần mềm.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 389000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 9,
+    "title": "Tạo ứng dụng Python thực tế",
+    "description": "Xây dựng ứng dụng thực tế bằng Python: từ thiết kế đến triển khai.",
+    "instructor": {
+      "id": 2,
+      "name": "Trần Thị D",
+      "email": "tranthid@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên Python, AI và phát triển phần mềm.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 499000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
+  },
+  {
+    "id": 10,
+    "title": "Python cho Data Analysis",
+    "description": "Học Python để phân tích dữ liệu với pandas, matplotlib và seaborn.",
+    "instructor": {
+      "id": 2,
+      "name": "Trần Thị D",
+      "email": "tranthid@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Giảng viên Python, AI và phát triển phần mềm.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 479000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 11,
+    "title": "Node.js cơ bản",
+    "description": "Học cách xây dựng server và API cơ bản với Node.js và Express.",
+    "instructor": {
+      "id": 3,
+      "name": "Lê Văn C",
+      "email": "levanc@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Backend Developer với kinh nghiệm về Node.js và hệ thống phân tán.",
+      "pendingStatus": "pending"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 399000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 12,
+    "title": "Xây dựng RESTful API với Express",
+    "description": "Hướng dẫn tạo REST API chuyên nghiệp với Express.js và Node.",
+    "instructor": {
+      "id": 3,
+      "name": "Lê Văn C",
+      "email": "levanc@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Backend Developer với kinh nghiệm về Node.js và hệ thống phân tán.",
+      "pendingStatus": "pending"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 429000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 13,
+    "title": "Node.js nâng cao",
+    "description": "Tìm hiểu các kỹ thuật nâng cao trong Node.js như clustering, worker threads, và streams.",
+    "instructor": {
+      "id": 3,
+      "name": "Lê Văn C",
+      "email": "levanc@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Backend Developer với kinh nghiệm về Node.js và hệ thống phân tán.",
+      "pendingStatus": "pending"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 459000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 14,
+    "title": "Xử lý bất đồng bộ trong Node.js",
+    "description": "Hướng dẫn async/await, promises và xử lý bất đồng bộ trong môi trường Node.",
+    "instructor": {
+      "id": 3,
+      "name": "Lê Văn C",
+      "email": "levanc@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Backend Developer với kinh nghiệm về Node.js và hệ thống phân tán.",
+      "pendingStatus": "pending"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 419000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
+  },
+  {
+    "id": 15,
+    "title": "Bảo mật web cho lập trình viên",
+    "description": "Khóa học về các kỹ thuật bảo mật web cơ bản và nâng cao.",
+    "instructor": {
+      "id": 3,
+      "name": "Lê Văn C",
+      "email": "levanc@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Backend Developer với kinh nghiệm về Node.js và hệ thống phân tán.",
+      "pendingStatus": "pending"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 439000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 16,
+    "title": "Cơ sở dữ liệu SQL",
+    "description": "Học cách thiết kế và quản lý cơ sở dữ liệu quan hệ với SQL.",
+    "instructor": {
+      "id": 4,
+      "name": "Phạm Thị E",
+      "email": "phamthie@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Chuyên gia cơ sở dữ liệu và quản trị hệ thống.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 379000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
+  },
+  {
+    "id": 17,
+    "title": "NoSQL với MongoDB",
+    "description": "Tìm hiểu MongoDB và các cơ chế NoSQL cho ứng dụng hiện đại.",
+    "instructor": {
+      "id": 4,
+      "name": "Phạm Thị E",
+      "email": "phamthie@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Chuyên gia cơ sở dữ liệu và quản trị hệ thống.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 419000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 18,
+    "title": "Tối ưu hóa truy vấn SQL",
+    "description": "Các kỹ thuật tối ưu truy vấn và thiết kế schema cho hiệu suất cao.",
+    "instructor": {
+      "id": 4,
+      "name": "Phạm Thị E",
+      "email": "phamthie@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Chuyên gia cơ sở dữ liệu và quản trị hệ thống.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 449000,
+    "pendingStatus": "approved",
+    "courseStatus": "In Progress"
+  },
+  {
+    "id": 19,
+    "title": "Backup và phục hồi dữ liệu",
+    "description": "Học cách backup, restore dữ liệu an toàn và hiệu quả.",
+    "instructor": {
+      "id": 4,
+      "name": "Phạm Thị E",
+      "email": "phamthie@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Chuyên gia cơ sở dữ liệu và quản trị hệ thống.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 399000,
+    "pendingStatus": "pending",
+    "courseStatus": "Not Started"
+  },
+  {
+    "id": 20,
+    "title": "Triển khai và quản trị Database",
+    "description": "Khóa học về triển khai, cấu hình và quản trị các hệ quản trị cơ sở dữ liệu.",
+    "instructor": {
+      "id": 4,
+      "name": "Phạm Thị E",
+      "email": "phamthie@example.com",
+      "avatarUrl": "https://placehold.co/100x100",
+      "description": "Chuyên gia cơ sở dữ liệu và quản trị hệ thống.",
+      "pendingStatus": "approved"
+    },
+    "student": [],
+    "videoLists": [],
+    "price": 459000,
+    "pendingStatus": "approved",
+    "courseStatus": "Complete"
   }
 ]

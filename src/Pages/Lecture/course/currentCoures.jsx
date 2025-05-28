@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // để chuyển trang
 import courseData from "../../../db/course.json";
+import lecturerData from "../../../db/lecturer.json";
 import "./course.css";
 
 const AddAssignmentModal = ({ courseId, onClose }) => {
@@ -18,12 +20,10 @@ const AddAssignmentModal = ({ courseId, onClose }) => {
       return;
     }
 
-    // Demo alert, bạn thay bằng API call upload file + mô tả
     alert(
       `Thêm bài tập cho khóa học ${courseId}\nMô tả: ${description}\nFile: ${file.name}`
     );
 
-    // Reset form
     setDescription("");
     setFile(null);
     onClose();
@@ -50,7 +50,11 @@ const AddAssignmentModal = ({ courseId, onClose }) => {
           </div>
           <div style={{ marginTop: "16px" }}>
             <button type="submit">Thêm bài tập</button>
-            <button type="button" onClick={onClose}>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{ marginTop: "16px" }}
+            >
               Hủy
             </button>
           </div>
@@ -67,12 +71,29 @@ const CurrentCourses = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
 
+  const navigate = useNavigate();
+
+  // Giả sử giảng viên hiện tại là giảng viên đầu tiên trong lecturerData
+  // Bạn có thể thay thế bằng lấy từ context, localStorage hoặc props
+  const currentLecturerId = lecturerData.length > 0 ? lecturerData[0].id : null;
+
   useEffect(() => {
-    const filteredCourses = courseData.filter(
-      (course) => course.status === "In Progress"
-    );
-    setCourses(filteredCourses);
-  }, []);
+    try {
+      if (!currentLecturerId) {
+        setError("Không tìm thấy thông tin giảng viên hiện tại");
+        return;
+      }
+      // Lọc khóa học đang tiến hành và thuộc giảng viên hiện tại
+      const filteredCourses = courseData.filter(
+        (course) =>
+          course.courseStatus === "In Progress" &&
+          course.instructor.id === currentLecturerId
+      );
+      setCourses(filteredCourses);
+    } catch (err) {
+      setError("Lỗi khi tải dữ liệu khóa học");
+    }
+  }, [currentLecturerId]);
 
   const handleAddAssignmentClick = (courseId) => {
     setSelectedCourseId(courseId);
@@ -82,6 +103,10 @@ const CurrentCourses = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedCourseId(null);
+  };
+
+  const handleCourseClick = (courseId) => {
+    navigate(`/lecturer/course/${courseId}`);
   };
 
   if (error) {
@@ -94,11 +119,19 @@ const CurrentCourses = () => {
         {courses.length > 0 ? (
           <ul className="course-list">
             {courses.map((course) => (
-              <li key={course.id} className="course-item">
+              <li
+                key={course.id}
+                className="course-item"
+                onClick={() => handleCourseClick(course.id)}
+                style={{ cursor: "pointer" }}
+              >
                 <span>{course.title}</span>
-                <span className="course-status">{course.status}</span>
+                <span className="course-status">{course.courseStatus}</span>
                 <button
-                  onClick={() => handleAddAssignmentClick(course.id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // ngăn không cho click lan ra <li>
+                    handleAddAssignmentClick(course.id);
+                  }}
                   className="add-assignment-btn"
                 >
                   <span className="plus-icon">+</span> Add Assignment

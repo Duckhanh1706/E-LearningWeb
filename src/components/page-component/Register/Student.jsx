@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Info.css"; // Dùng chung file CSS
+import "./Info.css";
 
 export default function RegisterStudentInfo() {
   const [name, setName] = useState("");
