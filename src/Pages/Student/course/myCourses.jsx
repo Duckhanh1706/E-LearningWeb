@@ -17,10 +17,8 @@ const MyCourses = () => {
 
       const enrolledIds = studentData.course || [];
 
-      const filteredCourses = courseData.filter(
-        (course) =>
-          enrolledIds.includes(course.id) &&
-          course.courseStatus.trim().toLowerCase() === "complete"
+      const filteredCourses = courseData.filter((course) =>
+        enrolledIds.includes(course.id)
       );
 
       setCourses(filteredCourses);
