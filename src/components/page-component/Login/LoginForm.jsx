@@ -14,14 +14,23 @@ export default function LoginForm({ handleCancel, showRegister }) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotError, setForgotError] = useState("");
 
   const navigate = useNavigate();
   const emailRef = useRef();
-  const { login } = useAuth();
+  const { user, login } = useAuth();
 
   useEffect(() => {
     emailRef.current.focus();
   }, []);
+
+  // Khi user thay đổi (đăng nhập thành công), redirect đến trang phù hợp
+  useEffect(() => {
+    if (user) {
+      navigate(`/${user.role}/profile`);
+    }
+  }, [user, navigate]);
 
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
@@ -56,53 +65,13 @@ export default function LoginForm({ handleCancel, showRegister }) {
       if (matchedUser) {
         console.log("Login successful:", matchedUser);
         login(matchedUser);
-        navigate(`/${role}/profile`);
+        // Không gọi navigate tại đây nữa
       } else {
         setError("Email, mật khẩu hoặc vai trò không đúng.");
       }
-    }, 800); // fake delay
+    }, 800);
   };
 
-  /* const loginUser = () => {
-    setError("");
-
-    if (!isValidEmail(email)) {
-      setError("Vui lòng nhập email hợp lệ.");
-      return;
-    }
-
-    if (password === "" || password.length <= 4) {
-      setError("Vui lòng nhập mật khẩu từ 5 ký tự trở lên.");
-      return;
-    }
-
-    setIsLoading(true);
-
-    fetch("https://api.example.com/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password, role }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Email, mật khẩu hoặc vai trò không đúng.");
-        }
-        return res.json();
-      })
-      .then((user) => {
-        setIsLoading(false);
-        console.log("Login successful:", user);
-        login(user);
-        navigate(`/${role}/profile`);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        setError(err.message || "Đăng nhập thất bại.");
-      });
-  };
-*/
   return (
     <div className="form fadeIn" style={{ maxWidth: 500 }}>
       <Title
@@ -201,15 +170,7 @@ export default function LoginForm({ handleCancel, showRegister }) {
         </div>
       </form>
 
-      <p
-        className="dk"
-        style={{
-          fontFamily: "Arial, sans-serif",
-          color: "#666666",
-          fontWeight: 300,
-          textAlign: "center",
-        }}
-      >
+      <p className="dk">
         Việc bạn tiếp tục sử dụng trang web này đồng nghĩa bạn đồng ý với điều{" "}
         khoản sử dụng của chúng tôi.
       </p>
@@ -228,12 +189,21 @@ export default function LoginForm({ handleCancel, showRegister }) {
                 placeholder="Nhập email của bạn"
                 className="form-control"
                 style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
               />
+              {forgotError && <div style={{ color: "red" }}>{forgotError}</div>}
               <div className="modal-actions">
                 <button
                   className="bt-primary"
                   onClick={() => {
-                    alert("Reset instructions sent to your email.");
+                    if (!isValidEmail(forgotEmail)) {
+                      setForgotError("Vui lòng nhập email hợp lệ.");
+                      return;
+                    }
+                    alert("Hướng dẫn khôi phục đã được gửi tới email của bạn.");
+                    setForgotEmail("");
+                    setForgotError("");
                     setShowForgotPassword(false);
                   }}
                 >
@@ -241,7 +211,11 @@ export default function LoginForm({ handleCancel, showRegister }) {
                 </button>
                 <button
                   className="bt-secondary"
-                  onClick={() => setShowForgotPassword(false)}
+                  onClick={() => {
+                    setForgotEmail("");
+                    setForgotError("");
+                    setShowForgotPassword(false);
+                  }}
                 >
                   Hủy
                 </button>

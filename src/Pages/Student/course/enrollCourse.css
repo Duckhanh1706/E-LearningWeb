@@ -52,7 +52,8 @@
 }
 
 /* ==== COURSE GRID ==== */
-ul {
+
+.course-enroll-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
@@ -61,7 +62,6 @@ ul {
   margin: 0 auto;
   max-width: 1000px;
 }
-
 .enroll-item {
   background-color: #fff;
   border: 1px solid #e0e0e0;

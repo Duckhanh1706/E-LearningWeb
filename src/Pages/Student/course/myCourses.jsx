@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import courseData from "../../../db/course.json";
-import studentData from "../../../db/student.json"; // Đây là 1 object, không phải mảng
+import studentData from "../../../db/student.json";
 import "./myCourses.css";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // ✅ thêm dòng này
 
   useEffect(() => {
     try {
@@ -15,8 +17,10 @@ const MyCourses = () => {
 
       const enrolledIds = studentData.course || [];
 
-      const filteredCourses = courseData.filter((course) =>
-        enrolledIds.includes(course.id)
+      const filteredCourses = courseData.filter(
+        (course) =>
+          enrolledIds.includes(course.id) &&
+          course.courseStatus.trim().toLowerCase() === "complete"
       );
 
       setCourses(filteredCourses);
@@ -27,21 +31,34 @@ const MyCourses = () => {
     }
   }, []);
 
+  const handleCourseClick = (courseId) => {
+    navigate(`/student/course/${courseId}`); // ✅ dùng template literal
+  };
+
   if (loading)
-    return <div className="cmp-loading">Đang tải khóa học đã đăng ký...</div>;
+    return (
+      <div className="cmp-loading">Đang tải khóa học đã hoàn thành...</div>
+    );
   if (error) return <div className="cmp-error">{error}</div>;
 
   return (
     <div className="cmp-course-list">
-      <h2 className="cmp-title">Khóa học đã đăng ký của {studentData.name}</h2>
-
+      <h2 className="cmp-title">
+        Khóa học đã hoàn thành của {studentData.name}
+      </h2>
       <ul className="cmp-course-ul">
         {courses.length === 0 ? (
           <li className="cmp-no-course">Không có khóa học nào</li>
         ) : (
           courses.map((course) => (
             <li key={course.id} className="cmp-course-item">
-              <h3 className="cmp-course-title">{course.title}</h3>
+              <h3
+                className="cmp-course-title"
+                onClick={() => handleCourseClick(course.id)}
+                style={{ cursor: "pointer" }} // ✅ di chuyển style ra ngoài
+              >
+                {course.title}
+              </h3>
               <p className="cmp-course-description">{course.description}</p>
               <p className="cmp-course-instructor">
                 <strong>Giảng viên:</strong> {course.instructor.name}

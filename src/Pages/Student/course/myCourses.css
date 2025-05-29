@@ -10,6 +10,7 @@
 }
 
 .cmp-title {
+  padding-top: 80px;
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: #333;
@@ -26,6 +27,7 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   min-width: max-content;
+  margin: 0 auto;
 }
 
 .cmp-course-item {

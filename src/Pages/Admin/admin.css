@@ -1,0 +1,191 @@
+/* ===== Phần CSS cho Admin Login ===== */
+.admin-login-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+  background-color: #fff;
+}
+
+.admin-login-form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-login-form input {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #0052cc;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #003d99;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* ===== Phần CSS cho Admin Dashboard ===== */
+.admin-dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  position: relative; /* Thêm để làm cơ sở cho vị trí nút logout */
+}
+
+.admin-dashboard h1 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.admin-dashboard p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.logout-btn {
+  position: fixed; /* Thay đổi thành absolute */
+  top: 20px; /* Cách trên 20px */
+  right: 20px; /* Cách phải 20px */
+  padding: 8px 16px;
+  background-color: #ff4d4f;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+}
+
+.logout-btn:hover {
+  background-color: #d9363e;
+}
+
+/* ===== Nếu bạn muốn thêm Sidebar cho AdminDashboard (nếu có) ===== */
+.admin-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ecf0f1;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar ul li {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #34495e;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #3d566e;
+}
+
+.manage-instructors-title,
+.manage-stu-title {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.button-group {
+  display: died;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 22px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+/* Nút phê duyệt giảng viên với class btn-approve-mn */
+.btn-approve-mn {
+  background-color: #27ae60;
+}
+
+.btn-approve-mn:hover {
+  background-color: #219150;
+}
+
+/* Các nút còn lại */
+.btn-add {
+  background-color: #2980b9;
+}
+
+.btn-add:hover {
+  background-color: #2471a3;
+}
+
+.btn-view {
+  background-color: #8e44ad;
+}
+
+.btn-view:hover {
+  background-color: #732d91;
+}
+
+.btn-delete {
+  background-color: #c0392b;
+}
+
+.btn-delete:hover {
+  background-color: #a93226;
+}
+
+/* Hiệu ứng khi bấm */
+.btn:active {
+  transform: scale(0.95);
+}

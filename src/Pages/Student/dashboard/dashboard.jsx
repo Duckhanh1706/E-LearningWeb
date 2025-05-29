@@ -51,7 +51,7 @@ export default function Dashboard() {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/student/course"
+                  to="/student/coursecmp"
                   className={({ isActive }) =>
                     isActive ? "nav-item active" : "nav-item"
                   }

@@ -133,7 +133,7 @@ export default function EnrollCourse() {
       </div>
 
       {/* Danh sách khóa học */}
-      <ul className="grid-list">
+      <ul className="course-enroll-list">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
             <li key={course.id} className="enroll-item">
