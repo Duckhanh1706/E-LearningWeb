@@ -3,7 +3,6 @@ import { useAuth } from "../../context/AuthContext";
 import Title from "../../common/Title";
 import Button from "../../common/Button";
 import FormGroup from "../../FormGroup";
-import users from "../../../db/login.json";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
@@ -25,7 +24,6 @@ export default function LoginForm({ handleCancel, showRegister }) {
     emailRef.current.focus();
   }, []);
 
-  // Khi user thay đổi (đăng nhập thành công), redirect đến trang phù hợp
   useEffect(() => {
     if (user) {
       navigate(`/${user.role}/profile`);
@@ -39,7 +37,7 @@ export default function LoginForm({ handleCancel, showRegister }) {
     loginUser();
   };
 
-  const loginUser = () => {
+  const loginUser = async () => {
     setError("");
 
     if (!isValidEmail(email)) {
@@ -54,22 +52,62 @@ export default function LoginForm({ handleCancel, showRegister }) {
 
     setIsLoading(true);
 
-    const matchedUser = users.find(
-      (user) =>
-        user.email === email && user.password === password && user.role === role
-    );
+    try {
+      const response = await fetch(, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, role }),
+      });
 
-    setTimeout(() => {
-      setIsLoading(false);
-
-      if (matchedUser) {
-        console.log("Login successful:", matchedUser);
-        login(matchedUser);
-        // Không gọi navigate tại đây nữa
-      } else {
-        setError("Email, mật khẩu hoặc vai trò không đúng.");
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || "Đăng nhập thất bại.");
+        setIsLoading(false);
+        return;
       }
-    }, 800);
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+       
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("refresh_token", data.refresh_token);
+
+        // Gọi API lấy profile có token trong header Authorization
+        const profileResponse = await fetch(, {
+          headers: {
+            Authorization: Bearer +" "+ data.access_token,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!profileResponse.ok) {
+          setError("Không thể lấy thông tin người dùng.");
+          setIsLoading(false);
+          return;
+        }
+
+        const profileData = await profileResponse.json();
+
+        // Cập nhật user context với thông tin profile mới
+        login({
+          id: profileData.id,
+          name: profileData.name,
+          email: profileData.email,
+          role: profileData.role,
+        });
+
+        setIsLoading(false);
+      } else {
+        setError(data.message || "Đăng nhập không thành công.");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setError("Có lỗi xảy ra, vui lòng thử lại sau.");
+    }
   };
 
   return (

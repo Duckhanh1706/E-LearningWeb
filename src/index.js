@@ -57,6 +57,11 @@ import ApproveInstructor from "./Pages/Admin/Lecturer/pending/approve";
 import RejectInstructor from "./Pages/Admin/Lecturer/pending/reject";
 import UpdateInstructor from "./Pages/Admin/Lecturer/update";
 import DeleteInstructor from "./Pages/Admin/Lecturer/delete";
+import AllStudentsPage from "./Pages/Admin/Student/allStudent";
+import CreateStudentPage from "./Pages/Admin/Student/createStudent";
+import StudentDetail from "./Pages/Admin/Student/studentDetail";
+import DeleteStudent from "./Pages/Admin/Student/delete";
+import UpdateStudent from "./Pages/Admin/Student/update";
 
 // Route guard
 function ProtectedRoute({ children, role }) {
@@ -109,6 +114,20 @@ const router = createBrowserRouter([
       {
         path: "instructor/delete-instructor/:instructorId",
         element: <DeleteInstructor />,
+      },
+      { path: "student/view", element: <AllStudentsPage /> },
+      {
+        path: "student/create-student",
+        element: <CreateStudentPage />,
+      },
+      { path: "student/:studentId", element: <StudentDetail /> },
+      {
+        path: "student/delete-student/:studentId",
+        element: <DeleteStudent />,
+      },
+      {
+        path: "student/update-student/:studentId",
+        element: <UpdateStudent />,
       },
     ],
   },
